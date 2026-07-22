@@ -1,0 +1,1674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TerraWalk AI - Intelligent Humanoid Simulation Matrix</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body {
+            background-color: #06060a;
+            color: #e2e8f0;
+            font-family: 'Courier New', Courier, monospace;
+            overflow-x: hidden;
+        }
+        .glow-border {
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.05);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+        }
+        .glow-border-blue {
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.05);
+            border: 1px solid rgba(6, 182, 212, 0.25);
+        }
+        .glow-text-emerald {
+            text-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+        }
+        .glow-text-cyan {
+            text-shadow: 0 0 10px rgba(6, 182, 212, 0.4);
+        }
+        /* Custom scrollbar handling for log deck */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #06060a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e1e2f;
+            border-radius: 2px;
+        }
+        .glass-panel {
+            background: rgba(10, 10, 15, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        /* Shimmer text flicker effect for telemetry calculation delays */
+        .shimmer-flicker {
+            animation: textFlicker 0.8s infinite alternate;
+        }
+        @keyframes textFlicker {
+            0% { opacity: 0.3; text-shadow: 0 0 2px rgba(245,158,11,0.2); }
+            100% { opacity: 1; text-shadow: 0 0 8px rgba(245,158,11,0.6); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between antialiased">
+
+    <div id="landing-phase" class="w-full min-h-screen flex flex-col justify-between z-50">
+        <header class="border-b border-zinc-800 bg-zinc-950/60 backdrop-blur-md px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="h-3 w-3 rounded-full bg-emerald-500 animate-pulse"></div>
+                <h1 class="text-xl font-bold tracking-wider text-zinc-100 flex items-center gap-2">
+                    TERRAWALK <span class="text-emerald-400 font-sans px-1.5 py-0.5 text-xs bg-emerald-950/80 border border-emerald-500/30 rounded font-bold">AI v2.8</span>
+                </h1>
+            </div>
+            <div class="flex items-center gap-6 text-xs text-zinc-400">
+                <div>CORE INFRASTRUCTURE: <span class="text-emerald-400">ONLINE</span></div>
+                <div>NODE NODE: <span class="text-cyan-400">US-MIDWEST-01</span></div>
+            </div>
+        </header>
+
+        <main class="max-w-7xl mx-auto w-full px-4 py-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center my-auto">
+            <div class="lg:col-span-7 flex flex-col justify-center space-y-8">
+                <div class="space-y-3">
+                    <div class="text-xs font-semibold text-emerald-400 tracking-widest uppercase flex items-center gap-2">
+                        <i class="fa-solid dig fa-microchip text-xs"></i> Kinematic Processing Environment
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white font-sans leading-tight">
+                        Adaptive High-Level <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Humanoid Locomotion</span> Matrix.
+                    </h2>
+                    <p class="text-zinc-400 font-sans max-w-xl text-sm leading-relaxed">
+                        TerraWalk AI bridges the gap between hyper-fast Large Language Model parsing structures and raw bipedal hardware mechanics to traverse real-time environmental volatility.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="p-4 rounded bg-zinc-900/40 border border-zinc-800/80 hover:border-emerald-500/30 transition-all duration-300">
+                        <div class="flex items-center gap-2 text-emerald-400 font-bold text-sm mb-2">
+                            <i class="fa-solid fa-mountain-sun text-xs"></i> 01 / TERRAIN BIOMES
+                        </div>
+                        <p class="text-xs text-zinc-400 font-sans leading-relaxed">
+                            Simulate environments like <b class="text-zinc-200">Desert Dunes</b> (low drag), <b class="text-zinc-200">Arctic Permafrost</b> (slick ice sheets), <b class="text-zinc-200">Volcanic Basalt</b>, and hazardous <b class="text-zinc-200">Industrial Ruins</b>.
+                        </p>
+                    </div>
+
+                    <div class="p-4 rounded bg-zinc-900/40 border border-zinc-800/80 hover:border-cyan-500/30 transition-all duration-300">
+                        <div class="flex items-center gap-2 text-cyan-400 font-bold text-sm mb-2">
+                            <i class="fa-solid fa-chart-line text-xs"></i> 02 / METRIC VECTORING
+                        </div>
+                        <p class="text-xs text-zinc-400 font-sans leading-relaxed">
+                            Examine instantaneous structural metrics such as the <b class="text-zinc-200">Ground Friction Coefficient</b> ($\mu$), dynamic <b class="text-zinc-200">Matrix Tilt Angle</b>, Step Frequency ($Hz$), and Zero Moment Point ($ZMP$).
+                        </p>
+                    </div>
+
+                    <div class="p-4 rounded bg-zinc-900/40 border border-zinc-800/80 hover:border-amber-500/30 transition-all duration-300">
+                        <div class="flex items-center gap-2 text-amber-400 font-bold text-sm mb-2">
+                            <i class="fa-solid fa-triangle-exclamation text-xs"></i> 03 / MITIGATION MATRIX
+                        </div>
+                        <p class="text-xs text-zinc-400 font-sans leading-relaxed">
+                            Spawns situational hazards dynamically directly into the actor path stream including <b class="text-zinc-200">Boulders</b>, deep <b class="text-zinc-200">Crevices</b>, hidden <b class="text-zinc-200">Ice Patches</b>, and <b class="text-zinc-200">Structural Debris</b>.
+                        </p>
+                    </div>
+
+                    <div class="p-4 rounded bg-zinc-900/40 border border-zinc-800/80 hover:border-purple-500/30 transition-all duration-300">
+                        <div class="flex items-center gap-2 text-purple-400 font-bold text-sm mb-2">
+                            <i class="fa-solid fa-terminal text-xs"></i> 04 / PROMPT DIRECTIVES
+                        </div>
+                        <p class="text-xs text-zinc-400 font-sans leading-relaxed">
+                            Issue free-form natural language traversal commands to instruct the algorithmic intelligence node to calculate compliance adjustments and gait frequencies instantly.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-5 w-full flex justify-center">
+                <div class="w-full max-w-md p-6 rounded bg-zinc-950 border border-zinc-800 glow-border-blue relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 to-emerald-500"></div>
+                    
+                    <div class="flex border-b border-zinc-800 mb-6 text-xs font-bold tracking-wider">
+                        <button id="auth-login-tab" onclick="switchAuthTab('login')" class="w-1/2 pb-3 border-b-2 border-cyan-400 text-cyan-400 transition-all duration-200">
+                            <i class="fa-solid fa-lock-open mr-1.5"></i> SYSTEM LOGIN
+                        </button>
+                        <button id="auth-signup-tab" onclick="switchAuthTab('signup')" class="w-1/2 pb-3 border-b border-transparent text-zinc-500 hover:text-zinc-300 transition-all duration-200">
+                            <i class="fa-solid fa-user-plus mr-1.5"></i> PROVISION NODE
+                        </button>
+                    </div>
+
+                    <div id="auth-status-msg" class="hidden mb-4 p-2.5 rounded text-xs font-mono border"></div>
+
+                    <div class="mb-4">
+                        <button type="button" onclick="handleGoogleLogin()" class="w-full py-2.5 rounded bg-zinc-900 hover:bg-zinc-850 border border-zinc-700 text-zinc-200 font-bold text-xs tracking-wider flex items-center justify-center gap-2 transition-all duration-200 shadow-sm">
+                            <i class="fa-brands fa-google text-rose-500 text-sm"></i> <span>CONTINUE WITH GOOGLE OAUTH</span>
+                        </button>
+                    </div>
+
+                    <div class="flex items-center my-4">
+                        <div class="flex-grow border-t border-zinc-800"></div>
+                        <span class="flex-shrink mx-3 text-[10px] font-mono text-zinc-500 uppercase tracking-widest">OR VIA CREDENTIALS</span>
+                        <div class="flex-grow border-t border-zinc-800"></div>
+                    </div>
+
+                    <form id="auth-form" onsubmit="handleAuthSubmit(event)" class="space-y-4">
+                        <div class="space-y-1.5">
+                            <label id="auth-identifier-label" class="text-[10px] uppercase font-bold tracking-widest text-zinc-400 block">Operator ID / Email</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-zinc-600 text-xs">
+                                    <i class="fa-solid fa-user-shield"></i>
+                                </span>
+                                <input id="auth-email-input" type="text" required class="w-full bg-zinc-900 border border-zinc-800 rounded px-3 py-2 pl-9 text-xs focus:outline-none focus:border-cyan-500 text-zinc-200 font-mono transition-colors" placeholder="user@node.domain or username">
+                            </div>
+                        </div>
+
+                        <div class="space-y-1.5">
+                            <label class="text-[10px] uppercase font-bold tracking-widest text-zinc-400 block">Encryption Pass-Key</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-zinc-600 text-xs">
+                                    <i class="fa-solid fa-key"></i>
+                                </span>
+                                <input id="auth-password-input" type="password" required class="w-full bg-zinc-900 border border-zinc-800 rounded px-3 py-2 pl-9 text-xs focus:outline-none focus:border-cyan-500 text-zinc-200 font-mono transition-colors" placeholder="••••••••">
+                            </div>
+                        </div>
+
+                        <div id="signup-extra-fields" class="hidden space-y-4 pt-1 animate-fadeIn">
+                            <div class="space-y-1.5">
+                                <label class="text-[10px] uppercase font-bold tracking-widest text-zinc-400 block">Unique Operator Username</label>
+                                <div class="relative">
+                                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-zinc-600 text-xs">
+                                        <i class="fa-solid fa-at"></i>
+                                    </span>
+                                    <input id="auth-username-input" type="text" class="w-full bg-zinc-900 border border-zinc-800 rounded px-3 py-2 pl-9 text-xs focus:outline-none focus:border-purple-500 text-zinc-300 font-mono" placeholder="operator_zero">
+                                </div>
+                            </div>
+                            <div class="space-y-1.5">
+                                <label class="text-[10px] uppercase font-bold tracking-widest text-zinc-400 block">Hardware Node Cluster ID</label>
+                                <input type="text" class="w-full bg-zinc-900 border border-zinc-800 rounded px-3 py-2 text-xs focus:outline-none focus:border-purple-500 text-zinc-300 font-mono" placeholder="TW-NODE-CLUSTER-99X">
+                            </div>
+                            <div class="flex items-center gap-2 py-1">
+                                <input type="checkbox" id="terms-chk" class="accent-cyan-500 bg-zinc-900 border-zinc-800 rounded">
+                                <label for="terms-chk" class="text-[11px] text-zinc-400 font-sans select-none">I authorize programmatic telemetry transmission</label>
+                            </div>
+                        </div>
+
+                        <div class="pt-2">
+                            <button id="auth-submit-btn" type="submit" class="w-full py-2.5 rounded bg-gradient-to-r from-cyan-600 to-emerald-600 hover:from-cyan-500 hover:to-emerald-500 text-zinc-950 font-bold text-xs tracking-widest uppercase transition-all duration-300 shadow-md flex items-center justify-center gap-2">
+                                <span id="auth-submit-text">INITIALIZE SIMULATION MATRIX</span> <i class="fa-solid fa-circle-chevron-right text-xs"></i>
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="mt-4">
+                        <button type="button" onclick="enterDashboardAsGuest()" class="w-full py-2 rounded bg-transparent hover:bg-zinc-900 border border-dashed border-zinc-700 text-zinc-400 hover:text-zinc-200 font-bold text-[10px] tracking-widest uppercase transition-all duration-200 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-gauge-high text-xs"></i> Skip Login &mdash; Go To Dashboard
+                        </button>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-zinc-900 flex justify-between text-[10px] text-zinc-500 font-mono">
+                        <div>SECURE SOCKETS: E2EE</div>
+                        <div>BRAIN CORE: LLAMA-3.1</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="border-t border-zinc-900 bg-zinc-950/40 text-center py-4 text-[11px] text-zinc-500 font-mono">
+            &copy; 2026 TerraWalk AI Engineering Labs. All programmatic simulations mapped securely.
+        </footer>
+    </div>
+
+
+    <div id="dashboard-phase" class="hidden w-full min-h-screen flex flex-col justify-between">
+        
+        <nav class="border-b border-zinc-800 bg-zinc-950 px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <span class="flex h-2 w-2 relative">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                <span class="text-sm font-bold tracking-wider text-white">TERRAWALK <span class="text-emerald-400">CORE LABS</span></span>
+                <div class="hidden md:flex items-center gap-1.5 ml-4 px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-[10px] text-zinc-400">
+                    <span class="text-zinc-600">FEED:</span> <span class="font-mono text-emerald-400 font-bold">LIVE_TELEMETRY_STREAM</span>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-4 text-xs">
+                <div class="hidden lg:grid grid-cols-5 gap-6 border-r border-zinc-800 pr-6">
+                    <div class="text-center font-mono">
+                        <div class="text-[9px] uppercase tracking-wider text-zinc-500 font-sans">Active Profile</div>
+                        <div id="telemetry-terrain" class="text-zinc-200 font-bold uppercase text-emerald-400">DESERT</div>
+                    </div>
+                    <div class="text-center font-mono">
+                        <div class="text-[9px] uppercase tracking-wider text-zinc-500 font-sans">Friction index</div>
+                        <div id="telemetry-friction" class="text-zinc-200 font-bold text-cyan-400">0.85</div>
+                    </div>
+                    <div class="text-center font-mono">
+                        <div class="text-[9px] uppercase tracking-wider text-zinc-500 font-sans">Matrix Angle</div>
+                        <div id="telemetry-angle" class="text-zinc-200 font-bold text-amber-400">0.0°</div>
+                    </div>
+                    <div class="text-center font-mono">
+                        <div class="text-[9px] uppercase tracking-wider text-zinc-500 font-sans">Step Frequency</div>
+                        <div id="telemetry-freq" class="text-zinc-200 font-bold text-purple-400">0.00 Hz</div>
+                    </div>
+                    <div class="text-center font-mono">
+                        <div class="text-[9px] uppercase tracking-wider text-zinc-500 font-sans">ZMP Stability</div>
+                        <div id="telemetry-zmp" class="text-zinc-200 font-bold text-emerald-400">98.0%</div>
+                    </div>
+                </div>
+
+                <div id="user-display-badge" class="hidden font-mono text-[11px] text-cyan-400 bg-cyan-950/40 border border-cyan-800/50 px-2 py-1 rounded">
+                    <i class="fa-solid fa-user-gear mr-1"></i> <span id="user-display-name">OPERATOR</span>
+                </div>
+
+                <button onclick="logoutSession()" class="px-2.5 py-1 rounded border border-zinc-800 bg-zinc-900 hover:bg-zinc-800 text-zinc-400 text-[11px] font-bold tracking-wider uppercase transition-colors flex items-center gap-1">
+                    <i class="fa-solid fa-power-off text-[10px] text-rose-500"></i> Disconnect
+                </button>
+            </div>
+        </nav>
+
+        <div class="flex-1 w-full grid grid-cols-1 lg:grid-cols-12 overflow-hidden">
+            
+            <aside class="lg:col-span-4 p-4 border-r border-zinc-800 bg-zinc-950/40 flex flex-col gap-4 overflow-y-auto max-h-[calc(100vh-120px)] lg:max-h-none">
+                
+                <div class="rounded p-4 bg-zinc-950 border border-zinc-900 space-y-3">
+                    <div class="text-xs font-bold tracking-wider text-zinc-400 flex items-center gap-1.5 uppercase">
+                        <i class="fa-solid fa-globe text-emerald-400"></i> Environmental Node Selection
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button id="btn-terrain-desert" onclick="switchTerrain('desert')" class="p-2 text-left rounded border border-emerald-500 bg-emerald-950/20 text-zinc-200 flex flex-col transition-all duration-200">
+                            <span class="text-xs font-bold text-emerald-400">Desert Dunes</span>
+                            <span class="text-[9px] font-mono text-zinc-500">Dry silt • 0.0°</span>
+                        </button>
+                        <button id="btn-terrain-arctic" onclick="switchTerrain('arctic')" class="p-2 text-left rounded border border-zinc-900 bg-zinc-900/30 text-zinc-400 hover:border-zinc-700 flex flex-col transition-all duration-200">
+                            <span class="text-xs font-bold">Arctic Perma</span>
+                            <span class="text-[9px] font-mono text-zinc-500">Slick ice • 2.5°</span>
+                        </button>
+                        <button id="btn-terrain-volcanic" onclick="switchTerrain('volcanic')" class="p-2 text-left rounded border border-zinc-900 bg-zinc-900/30 text-zinc-400 hover:border-zinc-700 flex flex-col transition-all duration-200">
+                            <span class="text-xs font-bold">Volcanic Basalt</span>
+                            <span class="text-[9px] font-mono text-zinc-500">Slag rock • 7.0°</span>
+                        </button>
+                        <button id="btn-terrain-ruins" onclick="switchTerrain('ruins')" class="p-2 text-left rounded border border-zinc-900 bg-zinc-900/30 text-zinc-400 hover:border-zinc-700 flex flex-col transition-all duration-200">
+                            <span class="text-xs font-bold">Industrial Ruins</span>
+                            <span class="text-[9px] font-mono text-zinc-500">Rubble • 4.5°</span>
+                        </button>
+                    </div>
+
+                    <div class="pt-3 mt-1 border-t border-zinc-900 space-y-3">
+                        <div class="flex flex-col space-y-1">
+                            <div class="flex justify-between text-[10px] font-mono">
+                                <label class="text-zinc-500 uppercase tracking-wider">Ground Friction Coefficient</label>
+                                <span id="friction-val" class="text-cyan-400 font-bold">0.85</span>
+                            </div>
+                            <input type="range" id="friction-slider" min="0.05" max="1.0" step="0.05" value="0.85" class="w-full accent-cyan-500 bg-zinc-800 h-1 rounded cursor-pointer">
+                        </div>
+                        <div class="flex flex-col space-y-1">
+                            <div class="flex justify-between text-[10px] font-mono">
+                                <label class="text-zinc-500 uppercase tracking-wider">Matrix Ground Angle (Tilt)</label>
+                                <span id="angle-val" class="text-amber-400 font-bold">0.0°</span>
+                            </div>
+                            <input type="range" id="angle-slider" min="-25" max="25" step="0.5" value="0" class="w-full accent-amber-500 bg-zinc-800 h-1 rounded cursor-pointer">
+                        </div>
+                        <div class="flex gap-2 pt-1">
+                            <button type="button" id="generate-terrain-btn" class="flex-1 bg-purple-600/10 hover:bg-purple-600/20 active:bg-purple-600/30 text-purple-400 border border-purple-500/30 text-[10px] font-bold py-1.5 rounded uppercase tracking-wider transition-all">
+                                <i class="fa-solid fa-dice mr-1"></i> Randomize Terrain
+                            </button>
+                            <button type="button" id="reset-btn" class="bg-zinc-800/60 hover:bg-zinc-800 text-zinc-300 border border-zinc-700/50 text-[10px] font-bold px-3 py-1.5 rounded uppercase tracking-wider transition-all">
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rounded p-4 bg-zinc-950 border border-zinc-900 flex-1 flex flex-col justify-between gap-4">
+                    <div class="space-y-4">
+                        <div class="text-xs font-bold tracking-wider text-zinc-400 flex items-center gap-1.5 uppercase">
+                            <i class="fa-solid fa-gamepad text-cyan-400"></i> Traversal Intent Console
+                        </div>
+                        
+                        <div class="space-y-1.5">
+                            <span class="text-[10px] font-bold text-zinc-500 tracking-wider uppercase block">Pre-Validated Intent Protocols</span>
+                            <div class="flex flex-col gap-1.5">
+                                <button onclick="setCommand('Walk forward at nominal speed')" class="text-left w-full px-2.5 py-1.5 rounded bg-zinc-900 hover:bg-zinc-850 text-xs font-mono text-zinc-300 border border-zinc-800 transition-colors flex items-center justify-between group">
+                                    <span>Nominal Forward Traversal</span>
+                                    <i class="fa-solid fa-chevron-right text-[10px] text-zinc-600 group-hover:text-cyan-400"></i>
+                                </button>
+                                <button onclick="setCommand('Carefully cross the slick path')" class="text-left w-full px-2.5 py-1.5 rounded bg-zinc-900 hover:bg-zinc-850 text-xs font-mono text-zinc-300 border border-zinc-800 transition-colors flex items-center justify-between group">
+                                    <span>High-Compliance Slip Comp</span>
+                                    <i class="fa-solid fa-chevron-right text-[10px] text-zinc-600 group-hover:text-cyan-400"></i>
+                                </button>
+                                <button onclick="setCommand('Execute defensive step over boulder')" class="text-left w-full px-2.5 py-1.5 rounded bg-zinc-900 hover:bg-zinc-850 text-xs font-mono text-zinc-300 border border-zinc-800 transition-colors flex items-center justify-between group">
+                                    <span>Vertical Obstacle Clearance</span>
+                                    <i class="fa-solid fa-chevron-right text-[10px] text-zinc-600 group-hover:text-cyan-400"></i>
+                                </button>
+                                <button onclick="setCommand('Navigate around structural rubble')" class="text-left w-full px-2.5 py-1.5 rounded bg-zinc-900 hover:bg-zinc-850 text-xs font-mono text-zinc-300 border border-zinc-800 transition-colors flex items-center justify-between group">
+                                    <span>Lateral Deflection Adjust</span>
+                                    <i class="fa-solid fa-chevron-right text-[10px] text-zinc-600 group-hover:text-cyan-400"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="rounded p-2.5 bg-zinc-900/40 border border-zinc-800/70 text-[10px] font-mono space-y-1.5">
+                            <div class="flex justify-between text-zinc-500">
+                                <span class="uppercase tracking-wider">Hazards Cleared</span>
+                                <span id="obstacle-count" class="text-emerald-400 font-bold">0 / 0</span>
+                            </div>
+                            <div id="active-hazard-line" class="text-zinc-500">No active hazard. Path is clear.</div>
+                            <div class="text-zinc-700 leading-relaxed pt-0.5 border-t border-zinc-900">
+                                Boulder/Crevice &rarr; "jump" or "climb" &bull; Ice &rarr; "crouch"/"sidestep" &bull; Debris &rarr; "climb"/"sidestep" &bull; Detour &rarr; "turn clockwise 90"
+                            </div>
+                        </div>
+
+                        <div id="hazard-hud" class="hidden rounded p-3 bg-rose-950/20 border border-rose-500/30 text-xs space-y-1 animate-pulse">
+                            <div class="font-bold text-rose-400 flex items-center gap-1.5">
+                                <i class="fa-solid fa-circle-exclamation"></i> CRITICAL ENVIRONMENT HAZARD DETECTED
+                            </div>
+                            <div id="hazard-title" class="text-zinc-200 font-mono font-bold uppercase">BOULDER DETECTED</div>
+                            <p id="hazard-desc" class="text-[11px] text-zinc-400 font-sans">Kinematic matrix collision threat vector identified directly ahead.</p>
+                        </div>
+
+                        <form id="control-form" class="space-y-2 pt-2">
+                            <label for="command-input" class="text-[10px] font-bold text-zinc-500 tracking-wider uppercase block">Custom Traversal Directives Prompt</label>
+                            <div class="relative">
+                                <input type="text" id="command-input" required class="w-full bg-zinc-900 border border-zinc-800 rounded px-3 py-2 text-xs focus:outline-none focus:border-emerald-500 font-mono text-zinc-200" placeholder="e.g. increase safety factor and clear obstacle...">
+                                <button type="submit" id="execute-btn" class="absolute right-1.5 top-1.5 h-6 px-3 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 text-[10px] font-bold tracking-wider rounded transition-colors uppercase">
+                                    ENGAGE
+                                </button>
+                            </div>
+                        </form>
+
+                        <div class="space-y-2 pt-1">
+                            <div class="relative w-full h-10 bg-zinc-950 border border-zinc-900 rounded overflow-hidden">
+                                <canvas id="waveform-canvas" class="w-full h-full"></canvas>
+                                <div id="audio-placeholder-text" class="absolute inset-0 flex items-center justify-center text-[9px] text-zinc-700 uppercase tracking-widest pointer-events-none">
+                                    Waveform Stream Offline
+                                </div>
+                            </div>
+                            <button type="button" id="voice-btn" class="w-full bg-cyan-600/10 hover:bg-cyan-600/20 active:bg-cyan-600/30 text-cyan-400 border border-cyan-500/30 text-[10px] font-bold py-2 rounded uppercase tracking-wider transition-all select-none">
+                                <i class="fa-solid fa-microphone mr-1"></i> Hold To Speak Command
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="border-t border-zinc-900 pt-3 mt-4 space-y-3">
+                        <div class="text-[10px] font-bold text-zinc-500 tracking-wider uppercase flex items-center gap-1">
+                            <i class="fa-solid fa-brain text-purple-400"></i> AI Kinematic Kinematics Matrix Output
+                        </div>
+                        <div class="p-3 bg-zinc-900/70 border border-zinc-800/80 rounded space-y-2 font-mono text-xs">
+                            <div>
+                                <span class="text-emerald-400 font-bold">Gait Profile:</span>
+                                <p id="gait-response" class="text-zinc-400 text-[11px] mt-0.5 leading-relaxed">System in automated idle hold telemetry mode. Waiting for initial neural drive command.</p>
+                            </div>
+                            <div class="border-t border-zinc-800/60 pt-1.5">
+                                <span class="text-cyan-400 font-bold">Stabilization Plan:</span>
+                                <p id="stabilization-response" class="text-zinc-400 text-[11px] mt-0.5 leading-relaxed">Dynamic balance active. Zero Moment Point calculated at nominal structural equilibrium.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="lg:col-span-8 flex flex-col relative overflow-hidden bg-[#09090e]">
+                <div class="absolute top-3 left-3 z-10 pointer-events-none bg-zinc-950/80 backdrop-blur border border-zinc-800 p-2 rounded text-[10px] font-mono space-y-0.5">
+                    <div class="text-zinc-400 flex items-center gap-1.5">
+                        <span class="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-pulse"></span> VIEW: ORTHO_MATRIX_TRACKER
+                    </div>
+                    <div class="text-zinc-600 text-[9px]">RENDERER: WEBGL_WIREFRAME_CORE</div>
+                </div>
+
+                <div id="shimmer-hud" class="hidden absolute top-14 left-3 z-10 bg-amber-500/10 border border-amber-500/40 text-amber-400 px-2.5 py-1.5 text-[10px] font-mono rounded tracking-widest uppercase shimmer-flicker">
+                    Recalculating Trajectory Vectors...
+                </div>
+
+                <div id="canvas-container" class="w-full flex-1 min-h-[350px] lg:min-h-0"></div>
+
+                <div class="border-t border-zinc-800 bg-zinc-950 p-3 h-32 flex flex-col gap-1">
+                    <div class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest flex items-center justify-between border-b border-zinc-900 pb-1 font-sans">
+                        <span class="flex items-center gap-1"><i class="fa-solid fa-receipt text-amber-500"></i> Micro-Kernel Event Logs Stream</span>
+                        <span class="text-zinc-600 font-mono text-[9px]">SYS_CLK_STREAM</span>
+                    </div>
+                    <div id="log-deck" class="flex-1 overflow-y-auto font-mono text-[11px] space-y-0.5 pr-2 text-zinc-500">
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <footer class="border-t border-zinc-800 bg-zinc-950 px-4 py-1.5 flex justify-between text-[10px] font-mono text-zinc-500">
+            <div>LOG_BUFFER: CLEAR</div>
+            <div class="text-emerald-500">CONNECTED TO TERRAWALK KINEMATIC BACKEND</div>
+        </footer>
+    </div>
+
+
+    <script>
+        // ---- Supabase Configuration & Authorization Initialization ----
+        const SUPABASE_URL = "{{ supabase_url|default('') }}";
+        const SUPABASE_ANON_KEY = "{{ supabase_anon_key|default('') }}";
+        let supabaseClient = null;
+
+        if (SUPABASE_URL && SUPABASE_ANON_KEY) {
+            supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        }
+
+        let isLoggedIn = false;
+        let currentAuthTabMode = 'login'; // 'login' or 'signup'
+
+        function showStatusMessage(message, isError = false) {
+            const statusBox = document.getElementById('auth-status-msg');
+            statusBox.classList.remove('hidden', 'bg-rose-950/40', 'border-rose-800/60', 'text-rose-300', 'bg-emerald-950/40', 'border-emerald-800/60', 'text-emerald-300');
+            
+            if (isError) {
+                statusBox.classList.add('bg-rose-950/40', 'border-rose-800/60', 'text-rose-300');
+            } else {
+                statusBox.classList.add('bg-emerald-950/40', 'border-emerald-800/60', 'text-emerald-300');
+            }
+            statusBox.textContent = message;
+        }
+
+        function switchAuthTab(tab) {
+            currentAuthTabMode = tab;
+            const loginTab = document.getElementById('auth-login-tab');
+            const signupTab = document.getElementById('auth-signup-tab');
+            const extraFields = document.getElementById('signup-extra-fields');
+            const submitText = document.getElementById('auth-submit-text');
+            const identifierLabel = document.getElementById('auth-identifier-label');
+            const statusBox = document.getElementById('auth-status-msg');
+
+            statusBox.classList.add('hidden');
+
+            if (tab === 'login') {
+                loginTab.className = "w-1/2 pb-3 border-b-2 border-cyan-400 text-cyan-400 transition-all duration-200";
+                signupTab.className = "w-1/2 pb-3 border-b border-transparent text-zinc-500 hover:text-zinc-300 transition-all duration-200";
+                extraFields.classList.add('hidden');
+                submitText.textContent = "INITIALIZE SIMULATION MATRIX";
+                identifierLabel.textContent = "Operator ID / Email or Username";
+            } else {
+                loginTab.className = "w-1/2 pb-3 border-b border-transparent text-zinc-500 hover:text-zinc-300 transition-all duration-200";
+                signupTab.className = "w-1/2 pb-3 border-b-2 border-purple-400 text-purple-400 transition-all duration-200";
+                extraFields.classList.remove('hidden');
+                submitText.textContent = "PROVISION NEW OPERATOR NODE";
+                identifierLabel.textContent = "Operator Email Address";
+            }
+        }
+
+        async function handleGoogleLogin() {
+            if (!supabaseClient) {
+                showStatusMessage("Supabase configuration missing in .env file (SUPABASE_URL / SUPABASE_ANON_KEY).", true);
+                return;
+            }
+            try {
+                const { data, error } = await supabaseClient.auth.signInWithOAuth({
+                    provider: 'google',
+                    options: {
+                        redirectTo: window.location.origin
+                    }
+                });
+                if (error) throw error;
+            } catch (err) {
+                showStatusMessage(`Google OAuth error: ${err.message}`, true);
+            }
+        }
+
+        async function handleAuthSubmit(event) {
+            event.preventDefault();
+
+            if (!supabaseClient) {
+                // Fallback for demonstration if Supabase environment variables are not yet configured
+                showStatusMessage("Supabase credentials unconfigured. Granting local simulation access...", false);
+                setTimeout(() => enterDashboard({ email: "operator@terrawalk.ai" }), 800);
+                return;
+            }
+
+            const emailOrUser = document.getElementById('auth-email-input').value.trim();
+            const password = document.getElementById('auth-password-input').value;
+            const usernameInput = document.getElementById('auth-username-input').value.trim();
+
+            const submitBtn = document.getElementById('auth-submit-btn');
+            submitBtn.disabled = true;
+
+            try {
+                if (currentAuthTabMode === 'signup') {
+                    showStatusMessage("Provisioning credentials in Supabase...", false);
+                    
+                    const finalUsername = usernameInput || emailOrUser.split('@')[0];
+
+                    const { data, error } = await supabaseClient.auth.signUp({
+                        email: emailOrUser,
+                        password: password,
+                        options: {
+                            data: {
+                                username: finalUsername
+                            }
+                        }
+                    });
+
+                    if (error) throw error;
+
+                    if (data?.user) {
+                        // Store created credentials in Supabase profiles table
+                        await supabaseClient.from('profiles').upsert({
+                            id: data.user.id,
+                            username: finalUsername,
+                            email: emailOrUser,
+                            created_at: new Date().toISOString()
+                        });
+                    }
+
+                    if (data.session) {
+                        showStatusMessage("Account provisioned successfully!", false);
+                        enterDashboard(data.user);
+                    } else {
+                        showStatusMessage("Sign up successful! Please check your email for confirmation or log in.", false);
+                    }
+
+                } else {
+                    // Login Mode: Supports both email OR username login
+                    showStatusMessage("Authenticating operator credentials...", false);
+                    let targetEmail = emailOrUser;
+
+                    // If user entered a username instead of an email, look up email in Supabase profiles table
+                    if (!emailOrUser.includes('@')) {
+                        const { data: profile, error: profileErr } = await supabaseClient
+                            .from('profiles')
+                            .select('email')
+                            .eq('username', emailOrUser)
+                            .maybeSingle();
+
+                        if (profileErr || !profile) {
+                            throw new Error("Specified username not found in node database.");
+                        }
+                        targetEmail = profile.email;
+                    }
+
+                    const { data, error } = await supabaseClient.auth.signInWithPassword({
+                        email: targetEmail,
+                        password: password
+                    });
+
+                    if (error) throw error;
+
+                    showStatusMessage("Authentication verified. Loading matrix...", false);
+                    enterDashboard(data.user);
+                }
+            } catch (err) {
+                showStatusMessage(err.message || "Authentication failed.", true);
+            } finally {
+                submitBtn.disabled = false;
+            }
+        }
+
+        function enterDashboardAsGuest() {
+            enterDashboard({ email: "guest@terrawalk.ai", user_metadata: { username: "guest" } });
+        }
+
+        function enterDashboard(user) {
+            isLoggedIn = true;
+            document.getElementById('landing-phase').classList.add('hidden');
+            document.getElementById('dashboard-phase').classList.remove('hidden');
+
+            const displayName = user?.user_metadata?.username || user?.email?.split('@')[0] || "OPERATOR";
+            const nameBadge = document.getElementById('user-display-name');
+            const badgeContainer = document.getElementById('user-display-badge');
+            if (nameBadge && badgeContainer) {
+                nameBadge.textContent = displayName.toUpperCase();
+                badgeContainer.classList.remove('hidden');
+            }
+
+            setTimeout(() => {
+                window.dispatchEvent(new Event('resize'));
+                pushLogSystem(`Authorization verified for [${displayName}]. Session key active.`, "info");
+                pushLogSystem("Initialized WebGL environment grid tracker node...", "success");
+            }, 100);
+        }
+
+        async function logoutSession() {
+            if (supabaseClient) {
+                await supabaseClient.auth.signOut();
+            }
+            isLoggedIn = false;
+            document.getElementById('dashboard-phase').classList.add('hidden');
+            document.getElementById('landing-phase').classList.remove('hidden');
+        }
+
+        // ---- Auto Session Listener on Load ----
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (supabaseClient) {
+                const { data: { session } } = await supabaseClient.auth.getSession();
+                if (session?.user) {
+                    enterDashboard(session.user);
+                }
+
+                supabaseClient.auth.onAuthStateChange((event, session) => {
+                    if (event === 'SIGNED_IN' && session?.user) {
+                        enterDashboard(session.user);
+                    } else if (event === 'SIGNED_OUT') {
+                        isLoggedIn = false;
+                        document.getElementById('dashboard-phase').classList.add('hidden');
+                        document.getElementById('landing-phase').classList.remove('hidden');
+                    }
+                });
+            }
+        });
+
+        // ---- Preserved Core Telemetry & Kinematic Logic Configuration Data Maps ----
+        const TERRAINS = {
+            desert: { title: 'Desert Dunes', friction: 0.85, angle: 0.0, color: 0xd97706, bg: '#251c05' },
+            arctic: { title: 'Arctic Permafrost', friction: 0.18, angle: 2.5, color: 0x38bdf8, bg: '#081c24' },
+            volcanic: { title: 'Volcanic Basalt', friction: 0.65, angle: 7.0, color: 0xdc2626, bg: '#290b0b' },
+            ruins: { title: 'Industrial Ruins', friction: 0.52, angle: 4.5, color: 0x71717a, bg: '#141416' }
+        };
+
+        const OBSTACLE_TYPES = ['boulder', 'crevice', 'ice_patch', 'debris'];
+        const BIOME_OBSTACLE_WEIGHTS = {
+            desert: ['boulder', 'debris'],
+            arctic: ['ice_patch', 'crevice'],
+            volcanic: ['boulder', 'crevice'],
+            ruins: ['debris', 'boulder', 'crevice']
+        };
+
+        let currentTerrain = 'desert';
+        let movementState = 'idle'; // idle, walk, run, crouch, jump, climb, sidestep, brace
+        let globalStepFrequency = 0.0;
+        let movementVelocity = 0.0;
+        let targetStepFrequency = 0.0;
+        let targetVelocity = 0.0;
+        let activeObstacle = null;
+        let obstacles = [];
+        let stumbleTimer = 0;
+
+        // ---- Three.js Simulation Context Variables ----
+        let container, scene, camera, renderer, gridHelper, environmentalFloor, startMarker;
+        let humanoidGroup, pelvisGroup, torsoGroup, headGroup, leftShoulder, rightShoulder;
+        let leftHip, leftKnee, rightHip, rightKnee;
+        let elapsedTime = 0;
+
+        // Full 2D world position + heading (yaw). Heading 0 = facing -Z. This is what makes
+        // rotate/turn commands actually change the direction the robot walks in.
+        let robotPos = { x: 0, z: 0 };
+        let currentHeading = 0, targetHeading = 0;
+        const SPEED_SCALE = 1.2;
+
+        // Mechanical physics pose targets (for clean LERP animations)
+        let currentHipAngle = 0, targetHipAngle = 0;
+        let currentKneeAngle = 0, targetKneeAngle = 0;
+        let currentCOMYOffset = 0.0, targetCOMYOffset = 0.0;
+
+        // Jump transient: scripted, forced forward motion so the robot visibly clears the gap
+        let isJumping = false, jumpStartTime = -999;
+        const JUMP_DURATION = 0.6, JUMP_HEIGHT = 0.85, JUMP_FORWARD_SPEED = 2.4;
+
+        // Climb transient: slower, higher, exaggerated high-step motion over the obstacle
+        let isClimbing = false, climbStartTime = -999;
+        const CLIMB_DURATION = 1.3, CLIMB_HEIGHT = 0.5, CLIMB_FORWARD_SPEED = 1.5;
+
+        // Sidestep transient: timed lateral strafe relative to current heading
+        let sidestepTimer = 0, sidestepSign = 0;
+        const SIDESTEP_SPEED = 2.0;
+
+        // Procedural terrain noise seed (varies shape between regenerations of the same biome)
+        let noiseSeedX = 0, noiseSeedZ = 0;
+
+        // Obstacle detection tuning
+        const DETECTION_RANGE = 3.2;
+        const LANE_WIDTH = 1.6;
+        const CLEAR_PASS_RANGE = -1.5;
+        const OBSTACLE_CLEAR_ACTIONS = {
+            boulder: ['jump', 'climb'],
+            crevice: ['jump'],
+            ice_patch: ['crouch', 'sidestep_left', 'sidestep_right'],
+            debris: ['climb', 'sidestep_left', 'sidestep_right']
+        };
+
+        // Audio orchestration state
+        let audioCtx, analyser, dataArray, sourceNode, animationFrameId;
+        let recognition;
+        let isRecording = false;
+
+        // Execute structural environment orchestration sequence on system parse load
+        initSimulationEngine();
+        setupInterfaceListeners();
+        setupVoiceProcessingEngine();
+
+        function initSimulationEngine() {
+            container = document.getElementById('canvas-container');
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x09090e);
+            scene.fog = new THREE.FogExp2(0x09090e, 0.032);
+
+            // Camera Setup
+            camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
+            camera.position.set(0, 4.5, 9);
+
+            // Renderer Configuration
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            container.appendChild(renderer.domElement);
+
+            // Lighting Setup
+            const ambientLight = new THREE.AmbientLight(0x30313f, 0.9);
+            scene.add(ambientLight);
+
+            const hemiLight = new THREE.HemisphereLight(0x8fa8c8, 0x0a0a0f, 0.5);
+            scene.add(hemiLight);
+
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1.1);
+            directionalLight.position.set(5, 12, 7);
+            scene.add(directionalLight);
+
+            const primaryGlowLight = new THREE.PointLight(0x10b981, 1, 15);
+            primaryGlowLight.position.set(0, 3, 0);
+            scene.add(primaryGlowLight);
+
+            // Procedurally deformed terrain, spawn marker, actor, and hazard field
+            generateProceduralTerrain(currentTerrain);
+            buildStartMarker();
+            buildHumanoidMatrix();
+            spawnObstacleField(currentTerrain);
+
+            // Track window sizing changes dynamically
+            window.addEventListener('resize', onViewportResizeMatrixAdjust);
+
+            // Launch Execution Render loop
+            renderer.setAnimationLoop(animateSimulationCycle);
+        }
+
+        // Pure mathematical formula calculation matching vertex shader deforms. noiseSeedX/Z
+        // offset the trig phase so regenerating the same biome still produces a fresh shape.
+        function calculateGroundMathHeight(globalX, globalZ, biome) {
+            let localX = globalX + noiseSeedX;
+            let localY = -globalZ + noiseSeedZ;
+
+            if (biome === 'arctic') {
+                return Math.sin(localX * 0.4) * Math.cos(localY * 0.4) * 0.4;
+            } else if (biome === 'ruins') {
+                return (Math.sin(localX * 1.5) * Math.cos(localY * 1.5) * 0.3) + (Math.sin(localX * 3.0) * 0.15);
+            } else if (biome === 'volcanic') {
+                return (Math.sin(localX * 2.0) * Math.cos(localY * 2.0) * 0.5) + (Math.sin(localX * 0.5) * 0.4);
+            } else if (biome === 'desert') {
+                return Math.sin(localX * 0.18) * Math.cos(localY * 0.18) * 0.3 + Math.sin(localX * 0.05) * 0.2;
+            }
+            return 0.0;
+        }
+
+        // Generates and deforms the physical ground platform geometry per-vertex to match the biome
+        function generateProceduralTerrain(biome) {
+            if (environmentalFloor) scene.remove(environmentalFloor);
+            if (gridHelper) scene.remove(gridHelper);
+
+            const size = 60, segments = 60;
+            const geometry = new THREE.PlaneGeometry(size, size, segments, segments);
+            const position = geometry.attributes.position;
+
+            for (let i = 0; i < position.count; i++) {
+                const x = position.getX(i);
+                const y = position.getY(i);
+                position.setZ(i, calculateGroundMathHeight(x, y, biome));
+            }
+            geometry.computeVertexNormals();
+
+            const material = new THREE.MeshStandardMaterial({
+                color: TERRAINS[biome].color,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.35
+            });
+
+            environmentalFloor = new THREE.Mesh(geometry, material);
+            environmentalFloor.rotation.x = -Math.PI / 2;
+            scene.add(environmentalFloor);
+
+            gridHelper = new THREE.GridHelper(80, 80, TERRAINS[biome].color, 0x1f2937);
+            gridHelper.position.y = -0.02;
+            scene.add(gridHelper);
+        }
+
+        // Marks the robot's spawn location so it is always clear where traversal begins
+        function buildStartMarker() {
+            if (startMarker) scene.remove(startMarker);
+            const ringGeo = new THREE.RingGeometry(0.7, 0.9, 32);
+            const ringMat = new THREE.MeshBasicMaterial({ color: 0x10b981, side: THREE.DoubleSide, transparent: true, opacity: 0.7 });
+            startMarker = new THREE.Mesh(ringGeo, ringMat);
+            startMarker.rotation.x = -Math.PI / 2;
+            startMarker.position.set(0, calculateGroundMathHeight(0, 0, currentTerrain) + 0.02, 0);
+            scene.add(startMarker);
+        }
+
+        // Constructs an articulated cybernetic humanoid: head w/ visor + headlamp, jointed torso/arms,
+        // and jointed legs (hip -> knee -> foot) so gait, jumps, and climbs read as real motion.
+        function buildHumanoidMatrix() {
+            humanoidGroup = new THREE.Group();
+
+            const bodyMat = new THREE.MeshStandardMaterial({ color: 0xaab2bd, metalness: 0.75, roughness: 0.32 });
+            const darkMat = new THREE.MeshStandardMaterial({ color: 0x252b36, metalness: 0.6, roughness: 0.45 });
+            const jointMat = new THREE.MeshStandardMaterial({ color: 0x2dd4bf, metalness: 0.3, roughness: 0.4, emissive: 0x0f766e, emissiveIntensity: 0.7 });
+            const visorMat = new THREE.MeshStandardMaterial({ color: 0x22d3ee, emissive: 0x22d3ee, emissiveIntensity: 1.4, metalness: 0.1, roughness: 0.1 });
+
+            // ---- Pelvis (hip girdle) - root articulation point ----
+            pelvisGroup = new THREE.Group();
+            pelvisGroup.position.y = 1.02;
+            humanoidGroup.add(pelvisGroup);
+            pelvisGroup.add(new THREE.Mesh(new THREE.BoxGeometry(0.46, 0.2, 0.28), bodyMat));
+
+            // ---- Torso ----
+            torsoGroup = new THREE.Group();
+            torsoGroup.position.y = 0.12;
+            pelvisGroup.add(torsoGroup);
+
+            const torsoMesh = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.55, 0.3), bodyMat);
+            torsoMesh.position.y = 0.27;
+            torsoGroup.add(torsoMesh);
+
+            const chestAccent = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.1, 0.05), jointMat);
+            chestAccent.position.set(0, 0.35, 0.16);
+            torsoGroup.add(chestAccent);
+
+            // ---- Head + visor + headlamp beam ----
+            headGroup = new THREE.Group();
+            headGroup.position.y = 0.58;
+            torsoGroup.add(headGroup);
+
+            headGroup.add(new THREE.Mesh(new THREE.BoxGeometry(0.26, 0.26, 0.26), bodyMat));
+            const visorMesh = new THREE.Mesh(new THREE.BoxGeometry(0.22, 0.07, 0.03), visorMat);
+            visorMesh.position.set(0, 0.02, 0.14);
+            headGroup.add(visorMesh);
+
+            const headSpotlight = new THREE.SpotLight(0xbfe9ff, 3.0, 20, 0.34, 0.5, 1.4);
+            headSpotlight.position.set(0, 0, 0.1);
+            headGroup.add(headSpotlight);
+            const headLightTarget = new THREE.Object3D();
+            headLightTarget.position.set(0, -1.4, 7);
+            headGroup.add(headLightTarget);
+            headSpotlight.target = headLightTarget;
+
+            // Cheap volumetric-look beam cone (additive, unlit) to visually sell the headlamp in the fog
+            const beamGeo = new THREE.CylinderGeometry(1.5, 0.04, 9, 20, 1, true);
+            beamGeo.translate(0, 4.5, 0);
+            const beamMat = new THREE.MeshBasicMaterial({ color: 0xbfe9ff, transparent: true, opacity: 0.06, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide });
+            const beamMesh = new THREE.Mesh(beamGeo, beamMat);
+            beamMesh.rotation.x = -Math.PI / 2 + 0.18;
+            beamMesh.position.set(0, -0.02, 0.1);
+            headGroup.add(beamMesh);
+
+            // ---- Arms (shoulder -> elbow) ----
+            function buildArm(sideSign) {
+                const shoulder = new THREE.Group();
+                shoulder.position.set(sideSign * 0.32, 0.42, 0);
+                torsoGroup.add(shoulder);
+                shoulder.add(new THREE.Mesh(new THREE.SphereGeometry(0.07, 10, 10), jointMat));
+
+                const upperArm = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.05, 0.36), bodyMat);
+                upperArm.position.y = -0.18;
+                shoulder.add(upperArm);
+
+                const elbow = new THREE.Group();
+                elbow.position.y = -0.36;
+                shoulder.add(elbow);
+                elbow.add(new THREE.Mesh(new THREE.SphereGeometry(0.055, 10, 10), jointMat));
+
+                const forearm = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.04, 0.32), darkMat);
+                forearm.position.y = -0.16;
+                elbow.add(forearm);
+
+                return shoulder;
+            }
+            leftShoulder = buildArm(-1);
+            rightShoulder = buildArm(1);
+
+            // ---- Legs (hip -> knee -> foot) ----
+            function buildLeg(sideSign) {
+                const hip = new THREE.Group();
+                hip.position.set(sideSign * 0.17, 0, 0);
+                pelvisGroup.add(hip);
+                hip.add(new THREE.Mesh(new THREE.SphereGeometry(0.08, 10, 10), jointMat));
+
+                const thigh = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.065, 0.46), bodyMat);
+                thigh.position.y = -0.23;
+                hip.add(thigh);
+
+                const knee = new THREE.Group();
+                knee.position.y = -0.46;
+                hip.add(knee);
+                knee.add(new THREE.Mesh(new THREE.SphereGeometry(0.07, 10, 10), jointMat));
+
+                const shin = new THREE.Mesh(new THREE.CylinderGeometry(0.065, 0.05, 0.44), darkMat);
+                shin.position.y = -0.22;
+                knee.add(shin);
+
+                const foot = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.08, 0.3), bodyMat);
+                foot.position.set(0, -0.46, 0.06);
+                knee.add(foot);
+
+                return { hip, knee };
+            }
+            const left = buildLeg(-1);
+            const right = buildLeg(1);
+            leftHip = left.hip; leftKnee = left.knee;
+            rightHip = right.hip; rightKnee = right.knee;
+
+            scene.add(humanoidGroup);
+        }
+
+        // ---- Obstacle / Hazard Field System ----
+        function createObstacleMesh(type) {
+            let group = new THREE.Group();
+            if (type === 'boulder') {
+                const geo = new THREE.IcosahedronGeometry(0.55, 0);
+                const mat = new THREE.MeshStandardMaterial({ color: 0x64748b, wireframe: true, emissive: 0x334155, emissiveIntensity: 0.5 });
+                group.add(new THREE.Mesh(geo, mat));
+                group.userData.heightOffset = 0.55;
+            } else if (type === 'crevice') {
+                const geo = new THREE.BoxGeometry(1.8, 0.08, 0.9);
+                const mat = new THREE.MeshStandardMaterial({ color: 0xef4444, wireframe: true, emissive: 0x7f1d1d, emissiveIntensity: 0.7, transparent: true, opacity: 0.75 });
+                group.add(new THREE.Mesh(geo, mat));
+                group.userData.heightOffset = 0.04;
+            } else if (type === 'ice_patch') {
+                const geo = new THREE.CylinderGeometry(0.9, 0.9, 0.05, 20);
+                const mat = new THREE.MeshStandardMaterial({ color: 0x38bdf8, wireframe: true, emissive: 0x0ea5e9, emissiveIntensity: 0.6, transparent: true, opacity: 0.55 });
+                group.add(new THREE.Mesh(geo, mat));
+                group.userData.heightOffset = 0.03;
+            } else if (type === 'debris') {
+                const mat = new THREE.MeshStandardMaterial({ color: 0x92400e, wireframe: true, emissive: 0x78350f, emissiveIntensity: 0.5 });
+                for (let i = 0; i < 4; i++) {
+                    const size = 0.2 + Math.random() * 0.25;
+                    const geo = new THREE.BoxGeometry(size, size, size);
+                    const cube = new THREE.Mesh(geo, mat);
+                    cube.position.set((Math.random() - 0.5) * 1.2, size / 2, (Math.random() - 0.5) * 1.2);
+                    group.add(cube);
+                }
+                group.userData.heightOffset = 0.0;
+            }
+            return group;
+        }
+
+        function spawnObstacleField(biome) {
+            obstacles.forEach(o => scene.remove(o.mesh));
+            obstacles = [];
+            activeObstacle = null;
+            document.getElementById('hazard-hud').classList.add('hidden');
+
+            const weightedTypes = BIOME_OBSTACLE_WEIGHTS[biome] || OBSTACLE_TYPES;
+            const count = 3 + Math.floor(Math.random() * 3);
+            const spacing = 20 / count;
+
+            for (let i = 0; i < count; i++) {
+                const type = weightedTypes[Math.floor(Math.random() * weightedTypes.length)];
+                const z = -6 - (i * spacing) - Math.random() * 2;
+                // Kept tight to the walking corridor (matches LANE_WIDTH) so generated hazards are
+                // reliably encountered rather than silently sitting off to the side.
+                const x = (Math.random() - 0.5) * 2.4;
+                const mesh = createObstacleMesh(type);
+                const groundY = calculateGroundMathHeight(x, z, biome);
+                mesh.position.set(x, groundY + mesh.userData.heightOffset, z);
+                scene.add(mesh);
+                obstacles.push({ mesh, type, x, z, cleared: false });
+            }
+
+            updateObstacleHud();
+            pushLogSystem(`Hazard matrix populated with ${count} unpredictable operational anomalies.`, "warning");
+        }
+
+        // Converts an obstacle's world position into the robot's local forward/lateral frame,
+        // based on the robot's *current heading* - so turning the robot genuinely changes whether
+        // something ahead still counts as "blocking".
+        function relativeLocal(o) {
+            const dx = o.x - robotPos.x;
+            const dz = o.z - robotPos.z;
+            const s = Math.sin(currentHeading), c = Math.cos(currentHeading);
+            const forwardDist = dx * s - dz * c;
+            const lateralDist = dx * c + dz * s;
+            return { forwardDist, lateralDist };
+        }
+
+        function updateObstacleHud() {
+            const clearedCount = obstacles.filter(o => o.cleared).length;
+            const countEl = document.getElementById('obstacle-count');
+            if (countEl) countEl.textContent = `${clearedCount} / ${obstacles.length}`;
+
+            const line = document.getElementById('active-hazard-line');
+            if (!line) return;
+            if (activeObstacle && !activeObstacle.cleared) {
+                const { forwardDist } = relativeLocal(activeObstacle);
+                line.innerHTML = `<span class="text-rose-400 font-bold uppercase">${activeObstacle.type.replace('_', ' ')}</span> ahead — ${Math.max(0, forwardDist).toFixed(1)}m`;
+            } else {
+                line.textContent = 'No active hazard. Path is clear.';
+            }
+        }
+
+        function markObstacleCleared(obstacle) {
+            obstacle.cleared = true;
+            obstacle.clearAnimStart = elapsedTime;
+            obstacle.mesh.traverse(child => {
+                if (child.material) {
+                    if (child.material.color) child.material.color.set(0x10b981);
+                    if (child.material.emissive) child.material.emissive.set(0x047857);
+                }
+            });
+        }
+
+        // Shrinks/dissolves obstacles away once cleared so the operator gets an obvious visual payoff
+        function updateObstacleVisuals() {
+            obstacles.forEach(o => {
+                if (o.cleared && o.clearAnimStart !== undefined && o.mesh.visible) {
+                    const t = (elapsedTime - o.clearAnimStart) / 0.9;
+                    if (t >= 1) {
+                        o.mesh.visible = false;
+                    } else {
+                        o.mesh.scale.setScalar(Math.max(0.001, 1 - t));
+                    }
+                }
+            });
+        }
+
+        function triggerStumble() {
+            stumbleTimer = 0.5;
+        }
+
+        // Scans the obstacle field each frame to detect hazards ahead of the robot (accounting for both
+        // forward distance AND how far off to the side they are) and halts for instructions. Also
+        // continuously re-checks the active hazard so turning away from it genuinely releases the hold.
+        function checkObstacleProximity() {
+            if (activeObstacle && !activeObstacle.cleared) {
+                const { forwardDist, lateralDist } = relativeLocal(activeObstacle);
+                const stillBlocking = forwardDist >= -0.3 && forwardDist < DETECTION_RANGE + 1.0 && Math.abs(lateralDist) < LANE_WIDTH;
+                if (stillBlocking) {
+                    targetVelocity = 0;
+                    updateObstacleHud();
+                    return;
+                } else {
+                    pushLogSystem(`'${activeObstacle.type}' is no longer blocking the path.`, "info");
+                    activeObstacle = null;
+                    document.getElementById('hazard-hud').classList.add('hidden');
+                    updateObstacleHud();
+                }
+            }
+
+            if (activeObstacle && activeObstacle.cleared) {
+                const { forwardDist } = relativeLocal(activeObstacle);
+                if (forwardDist < CLEAR_PASS_RANGE) {
+                    activeObstacle = null;
+                    updateObstacleHud();
+                }
+                return;
+            }
+
+            for (const o of obstacles) {
+                if (o.cleared) continue;
+                const { forwardDist, lateralDist } = relativeLocal(o);
+                if (forwardDist >= -0.3 && forwardDist < DETECTION_RANGE && Math.abs(lateralDist) < LANE_WIDTH) {
+                    activeObstacle = o;
+                    targetVelocity = 0;
+                    const formattedTitle = o.type.replace('_', ' ');
+                    document.getElementById('hazard-title').textContent = `${formattedTitle.toUpperCase()} DETECTED`;
+                    document.getElementById('hazard-desc').textContent = `Kinematic matrix collision threat vector identified ${Math.max(0, forwardDist).toFixed(1)}m directly ahead. Awaiting tackling instruction.`;
+                    document.getElementById('hazard-hud').classList.remove('hidden');
+                    pushLogSystem(`'${o.type}' detected ahead. Robot halted, awaiting instruction.`, "warning");
+                    updateObstacleHud();
+                    break;
+                }
+            }
+        }
+
+        // ---- UI Action Responders & Handlers ----
+        function switchTerrain(terrainKey) {
+            if (!TERRAINS[terrainKey]) return;
+
+            // Handle active styling class changes
+            Object.keys(TERRAINS).forEach(k => {
+                const btn = document.getElementById(`btn-terrain-${k}`);
+                if (btn) {
+                    btn.className = k === terrainKey
+                        ? "p-2 text-left rounded border border-emerald-500 bg-emerald-950/20 text-zinc-200 flex flex-col transition-all duration-200"
+                        : "p-2 text-left rounded border border-zinc-900 bg-zinc-900/30 text-zinc-400 hover:border-zinc-700 flex flex-col transition-all duration-200";
+                }
+            });
+
+            const preset = TERRAINS[terrainKey];
+            const frictionSlider = document.getElementById('friction-slider');
+            const angleSlider = document.getElementById('angle-slider');
+            frictionSlider.value = preset.friction;
+            document.getElementById('friction-val').textContent = preset.friction.toFixed(2);
+            angleSlider.value = preset.angle;
+            document.getElementById('angle-val').textContent = `${preset.angle.toFixed(1)}°`;
+
+            // Update top bar layout dashboard labels
+            document.getElementById('telemetry-terrain').textContent = terrainKey;
+            document.getElementById('telemetry-friction').textContent = preset.friction.toFixed(2);
+            document.getElementById('telemetry-angle').textContent = `${preset.angle.toFixed(1)}°`;
+
+            regenerateWorld(terrainKey);
+            pushLogSystem(`Telemetry plane shifted to Node Cluster biome profile: [${preset.title}]`, "info");
+        }
+
+        // Regenerates terrain shape + obstacle scatter with a fresh noise seed, and returns the
+        // robot to the START marker so the newly generated hazard field is always reachable.
+        function regenerateWorld(biome) {
+            currentTerrain = biome;
+            noiseSeedX = Math.random() * 1000;
+            noiseSeedZ = Math.random() * 1000;
+            robotPos = { x: 0, z: 0 };
+            currentHeading = 0; targetHeading = 0;
+            movementState = 'idle';
+            movementVelocity = 0.0; targetVelocity = 0.0;
+            globalStepFrequency = 0.0; targetStepFrequency = 0.0;
+            currentCOMYOffset = 0; targetCOMYOffset = 0;
+            isJumping = false; isClimbing = false; sidestepTimer = 0; stumbleTimer = 0;
+
+            generateProceduralTerrain(biome);
+            buildStartMarker();
+            spawnObstacleField(biome);
+
+            const angleSlider = document.getElementById('angle-slider');
+            if (environmentalFloor && angleSlider) {
+                environmentalFloor.rotation.y = (parseFloat(angleSlider.value) * Math.PI) / 180;
+            }
+        }
+
+        function setupInterfaceListeners() {
+            const frictionSlider = document.getElementById('friction-slider');
+            const angleSlider = document.getElementById('angle-slider');
+            const generateBtn = document.getElementById('generate-terrain-btn');
+            const resetBtn = document.getElementById('reset-btn');
+
+            frictionSlider.addEventListener('input', (e) => {
+                const val = parseFloat(e.target.value).toFixed(2);
+                document.getElementById('friction-val').textContent = val;
+                document.getElementById('telemetry-friction').textContent = val;
+            });
+
+            angleSlider.addEventListener('input', (e) => {
+                const deg = parseFloat(e.target.value);
+                document.getElementById('angle-val').textContent = `${deg.toFixed(1)}°`;
+                document.getElementById('telemetry-angle').textContent = `${deg.toFixed(1)}°`;
+                if (environmentalFloor) environmentalFloor.rotation.y = (deg * Math.PI) / 180;
+            });
+
+            generateBtn.addEventListener('click', () => {
+                const keys = Object.keys(TERRAINS);
+                const randomKey = keys[Math.floor(Math.random() * keys.length)];
+                switchTerrain(randomKey);
+
+                const randomFriction = (0.05 + Math.random() * 0.95).toFixed(2);
+                frictionSlider.value = randomFriction;
+                document.getElementById('friction-val').textContent = randomFriction;
+                document.getElementById('telemetry-friction').textContent = randomFriction;
+
+                const randomAngle = (Math.random() - 0.5) * 50;
+                angleSlider.value = randomAngle.toFixed(1);
+                document.getElementById('angle-val').textContent = `${randomAngle.toFixed(1)}°`;
+                document.getElementById('telemetry-angle').textContent = `${randomAngle.toFixed(1)}°`;
+                if (environmentalFloor) environmentalFloor.rotation.y = (randomAngle * Math.PI) / 180;
+
+                pushLogSystem(`New terrain condition generated: [${TERRAINS[randomKey].title}] with ${obstacles.length} hazards seeded.`, "warning");
+            });
+
+            resetBtn.addEventListener('click', () => {
+                robotPos = { x: 0, z: 0 };
+                currentHeading = 0; targetHeading = 0;
+                movementState = 'idle';
+                movementVelocity = 0.0; targetVelocity = 0.0;
+                isJumping = false; isClimbing = false; sidestepTimer = 0; stumbleTimer = 0;
+                spawnObstacleField(currentTerrain);
+                pushLogSystem("Robot returned to START marker. Hazard field reseeded.", "info");
+            });
+        }
+
+        function setCommand(promptText) {
+            const input = document.getElementById('command-input');
+            if (input) input.value = promptText;
+        }
+
+        function pushLogSystem(message, type = 'info') {
+            const logDeck = document.getElementById('log-deck');
+            if (!logDeck) return;
+
+            const timeStamp = new Date().toISOString().slice(11, 19);
+            let colorClass = "text-zinc-500";
+            if (type === 'success') colorClass = "text-emerald-400 font-bold";
+            if (type === 'warning') colorClass = "text-amber-400";
+            if (type === 'error') colorClass = "text-rose-400 font-bold animate-pulse";
+
+            const logRow = document.createElement('div');
+            logRow.className = "text-[11px] font-mono tracking-tight leading-normal py-0.5 border-b border-zinc-900/40";
+            logRow.innerHTML = `<span class="text-zinc-600">[${timeStamp}]</span> <span class="${colorClass}">${message}</span>`;
+
+            logDeck.appendChild(logRow);
+            logDeck.scrollTop = logDeck.scrollHeight;
+        }
+
+        // Packages dashboard tracking criteria and triggers the serverless Groq kinematic brain.
+        // Shared by the text form submit handler and the voice recognition result handler.
+        async function executeCommand() {
+            const commandInput = document.getElementById('command-input');
+            const shimmerHud = document.getElementById('shimmer-hud');
+            const executeBtn = document.getElementById('execute-btn');
+
+            const commandText = commandInput.value.trim();
+            if (!commandText) {
+                pushLogSystem("Traversal instruction vector empty. Sequence canceled.", "warning");
+                return;
+            }
+
+            shimmerHud.classList.remove('hidden');
+            executeBtn.disabled = true;
+            executeBtn.classList.add('opacity-50');
+            pushLogSystem("Transmitting telemetry state parameters vector via REST gateway...", "info");
+
+            try {
+                const payload = {
+                    command: commandText,
+                    terrain: TERRAINS[currentTerrain].title,
+                    friction: parseFloat(document.getElementById('friction-slider').value),
+                    angle: parseFloat(document.getElementById('angle-slider').value)
+                };
+
+                if (activeObstacle && !activeObstacle.cleared) {
+                    const { forwardDist } = relativeLocal(activeObstacle);
+                    payload.obstacle = { type: activeObstacle.type, distance: Math.max(0, forwardDist) };
+                }
+
+                const response = await fetch('/api/traverse', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    pushLogSystem(`Neural execution failed. ${data.error} ${data.details ? '[' + data.details + ']' : ''}`, "error");
+                    return;
+                }
+
+                if (data.movement_state) {
+                    movementState = data.movement_state;
+                }
+
+                if (data.joint_angles) {
+                    targetHipAngle = (data.joint_angles.hip || 0) * (Math.PI / 180);
+                    targetKneeAngle = (data.joint_angles.knee || 0) * (Math.PI / 180);
+                }
+                if (data.center_of_mass_shift) {
+                    targetCOMYOffset = data.center_of_mass_shift.y || 0.0;
+                }
+                if (data.step_frequency !== undefined) {
+                    targetStepFrequency = data.step_frequency;
+                }
+
+                // Rotation / detour: applies independently of any hazard, so "turn clockwise" always works
+                let rotationApplied = false;
+                if (data.rotation && data.rotation.turn && data.rotation.turn !== 'none') {
+                    const deg = data.rotation.angle_degrees || 90;
+                    const dir = data.rotation.turn === 'clockwise' ? 1 : -1;
+                    targetHeading += dir * THREE.MathUtils.degToRad(deg);
+                    rotationApplied = true;
+                    pushLogSystem(`Rotating ${data.rotation.turn} ${deg.toFixed(0)}°.`, "info");
+                }
+
+                // ---- Hazard resolution logic ----
+                if (activeObstacle && !activeObstacle.cleared) {
+                    const action = data.obstacle_action || 'none';
+                    const validActions = OBSTACLE_CLEAR_ACTIONS[activeObstacle.type] || [];
+
+                    if (validActions.includes(action)) {
+                        markObstacleCleared(activeObstacle);
+                        document.getElementById('hazard-hud').classList.add('hidden');
+                        // Guarantee forward progress resumes after a successful clear even if Groq
+                        // returned a near-zero velocity for the discrete jump/climb/sidestep action itself.
+                        targetVelocity = Math.max(data.velocity !== undefined ? data.velocity : 1.5, 1.2);
+                        movementVelocity = targetVelocity; // snap so the transient starts immediately
+
+                        if (action === 'jump') {
+                            isJumping = true;
+                            jumpStartTime = elapsedTime;
+                        } else if (action === 'climb') {
+                            isClimbing = true;
+                            climbStartTime = elapsedTime;
+                        } else if (action === 'sidestep_left') {
+                            sidestepSign = -1;
+                            sidestepTimer = Math.abs(data.lateral_shift || 1.4) / SIDESTEP_SPEED;
+                        } else if (action === 'sidestep_right') {
+                            sidestepSign = 1;
+                            sidestepTimer = Math.abs(data.lateral_shift || 1.4) / SIDESTEP_SPEED;
+                        }
+
+                        pushLogSystem(`Hazard cleared: '${activeObstacle.type}' resolved via '${action}'.`, "success");
+                    } else if (action !== 'none') {
+                        triggerStumble();
+                        pushLogSystem(`Action '${action}' does not clear a '${activeObstacle.type}'. Try again.`, "error");
+                    } else if (rotationApplied) {
+                        targetVelocity = data.velocity !== undefined ? data.velocity : movementVelocity;
+                        pushLogSystem("Attempting to route around the hazard by turning.", "info");
+                    } else {
+                        pushLogSystem("Hazard still blocking. Instruct jump/climb/crouch/sidestep, or turn to detour.", "warning");
+                    }
+                    updateObstacleHud();
+                } else if (data.velocity !== undefined) {
+                    targetVelocity = data.velocity;
+                }
+
+                const rationale = data.biomechanical_rationale || 'Processed successfully.';
+                document.getElementById('gait-response').textContent = `[${movementState.toUpperCase()}] ${rationale}`;
+
+                const torque = data.torque_compensation || { ankle: 0, knee: 0, waist: 0 };
+                const stabilityVal = data.stability_projection;
+                const stabilityText = stabilityVal !== undefined ? `${Number(stabilityVal).toFixed(1)}%` : '—';
+                document.getElementById('stabilization-response').textContent =
+                    `Torque — Ankle: ${(torque.ankle || 0).toFixed(1)} Nm • Knee: ${(torque.knee || 0).toFixed(1)} Nm • Waist: ${(torque.waist || 0).toFixed(1)} Nm • Stability Proj: ${stabilityText}`;
+
+                pushLogSystem(`State machine calibrated. Executing: ${movementState.toUpperCase()} loop.`, "success");
+
+            } catch (err) {
+                pushLogSystem(`Pipeline interface communication node timed out. ${err.message}`, "error");
+            } finally {
+                shimmerHud.classList.add('hidden');
+                executeBtn.disabled = false;
+                executeBtn.classList.remove('opacity-50');
+            }
+        }
+
+        // ---- Processing Input Form Event Interception ----
+        document.getElementById('control-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            executeCommand();
+        });
+
+        // ---- Voice command capture (Web Speech + Web Audio waveform) ----
+        function setupVoiceProcessingEngine() {
+            const voiceBtn = document.getElementById('voice-btn');
+            const commandInput = document.getElementById('command-input');
+
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+            if (!SpeechRecognition) {
+                pushLogSystem("Web Speech API unsupported. Text execution fallback fully active.", "warning");
+                voiceBtn.disabled = true;
+                voiceBtn.textContent = 'Speech Interface Unsupported';
+                return;
+            }
+
+            recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
+
+            recognition.onstart = () => {
+                pushLogSystem("Natural language stream listener connected.", "info");
+            };
+
+            recognition.onresult = (event) => {
+                const speechToText = event.results[0][0].transcript;
+                commandInput.value = speechToText;
+                pushLogSystem(`Input captured: "${speechToText}"`, "info");
+                executeCommand();
+            };
+
+            recognition.onerror = (event) => {
+                pushLogSystem(`Audio pipeline matching failed with error token [${event.error}]`, "error");
+                stopAudioStreamCapture();
+            };
+
+            recognition.onend = () => {
+                if (isRecording) stopAudioStreamCapture();
+            };
+
+            voiceBtn.addEventListener('mousedown', startAudioStreamCapture);
+            voiceBtn.addEventListener('mouseup', stopAudioStreamCapture);
+            voiceBtn.addEventListener('mouseleave', stopAudioStreamCapture);
+
+            voiceBtn.addEventListener('touchstart', (e) => { e.preventDefault(); startAudioStreamCapture(); });
+            voiceBtn.addEventListener('touchend', (e) => { e.preventDefault(); stopAudioStreamCapture(); });
+        }
+
+        async function startAudioStreamCapture() {
+            if (isRecording) return;
+            isRecording = true;
+
+            const voiceBtn = document.getElementById('voice-btn');
+            const placeholder = document.getElementById('audio-placeholder-text');
+
+            voiceBtn.innerHTML = '<i class="fa-solid fa-waveform-lines mr-1"></i> LISTENING...';
+            voiceBtn.classList.replace('text-cyan-400', 'text-amber-400');
+            voiceBtn.classList.replace('border-cyan-500/30', 'border-amber-500/50');
+            placeholder.classList.add('hidden');
+
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+                analyser = audioCtx.createAnalyser();
+                analyser.fftSize = 256;
+
+                sourceNode = audioCtx.createMediaStreamSource(stream);
+                sourceNode.connect(analyser);
+
+                const bufferLength = analyser.frequencyBinCount;
+                dataArray = new Uint8Array(bufferLength);
+
+                recognition.start();
+                drawNeonAudioWaveform();
+
+            } catch (err) {
+                pushLogSystem("Media stream hardware routing access rejected.", "error");
+                stopAudioStreamCapture();
+            }
+        }
+
+        function stopAudioStreamCapture() {
+            if (!isRecording) return;
+            isRecording = false;
+
+            const voiceBtn = document.getElementById('voice-btn');
+            const placeholder = document.getElementById('audio-placeholder-text');
+
+            voiceBtn.innerHTML = '<i class="fa-solid fa-microphone mr-1"></i> Hold To Speak Command';
+            voiceBtn.classList.replace('text-amber-400', 'text-cyan-400');
+            voiceBtn.classList.replace('border-amber-500/50', 'border-cyan-500/30');
+            placeholder.classList.remove('hidden');
+
+            if (recognition) recognition.stop();
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+
+            if (sourceNode) {
+                sourceNode.disconnect();
+                sourceNode.mediaStream.getTracks().forEach(track => track.stop());
+            }
+
+            const canvas = document.getElementById('waveform-canvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function drawNeonAudioWaveform() {
+            if (!isRecording) return;
+            animationFrameId = requestAnimationFrame(drawNeonAudioWaveform);
+
+            const canvas = document.getElementById('waveform-canvas');
+            const ctx = canvas.getContext('2d');
+
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+
+            analyser.getByteTimeDomainData(dataArray);
+
+            ctx.fillStyle = '#09090e';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = '#22d3ee';
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = '#22d3ee';
+
+            ctx.beginPath();
+            const sliceWidth = canvas.width / dataArray.length;
+            let x = 0;
+
+            for (let i = 0; i < dataArray.length; i++) {
+                const v = dataArray[i] / 128.0;
+                const y = (v * canvas.height) / 2;
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+                x += sliceWidth;
+            }
+
+            ctx.lineTo(canvas.width, canvas.height / 2);
+            ctx.stroke();
+        }
+
+        // Drives hip/knee/arm rotations every frame based on current locomotion state, producing a
+        // distinct, clearly readable animation for walking, running, climbing, and jumping.
+        function updateGait(t) {
+            const baseHip = currentHipAngle;
+            const baseKnee = -currentKneeAngle;
+
+            if (isJumping) {
+                leftHip.rotation.x = 0.7; rightHip.rotation.x = 0.5;
+                leftKnee.rotation.x = -1.1; rightKnee.rotation.x = -0.8;
+                leftShoulder.rotation.x = -0.6; rightShoulder.rotation.x = 0.4;
+                return;
+            }
+
+            let freq, legAmplitude, kneeAmplitude, armAmplitude;
+            if (isClimbing) {
+                freq = 3.2; legAmplitude = 0.55; kneeAmplitude = 1.3; armAmplitude = 0.5;
+            } else if (movementState === 'run') {
+                freq = Math.max(globalStepFrequency, 1.5); legAmplitude = 0.55; kneeAmplitude = 0.9; armAmplitude = 0.6;
+            } else if (movementState !== 'idle' && globalStepFrequency > 0) {
+                freq = globalStepFrequency; legAmplitude = 0.3; kneeAmplitude = 0.55; armAmplitude = 0.35;
+            } else {
+                freq = 0.9; legAmplitude = 0.04; kneeAmplitude = 0.03; armAmplitude = 0.03;
+            }
+
+            const leftPhase = t * freq * 2.0;
+            const rightPhase = leftPhase + Math.PI;
+
+            leftHip.rotation.x = baseHip + Math.sin(leftPhase) * legAmplitude;
+            rightHip.rotation.x = baseHip + Math.sin(rightPhase) * legAmplitude;
+            leftKnee.rotation.x = baseKnee - Math.max(0, Math.sin(leftPhase)) * kneeAmplitude;
+            rightKnee.rotation.x = baseKnee - Math.max(0, Math.sin(rightPhase)) * kneeAmplitude;
+
+            // Arms counter-swing opposite their same-side leg for a natural gait
+            leftShoulder.rotation.x = -Math.sin(leftPhase) * armAmplitude;
+            rightShoulder.rotation.x = -Math.sin(rightPhase) * armAmplitude;
+        }
+
+        function onViewportResizeMatrixAdjust() {
+            if (!container) return;
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        }
+
+        // ---- Continuous Frame Calculation Tick Render Loop ----
+        function animateSimulationCycle() {
+            if (!isLoggedIn) return; // Freeze pipeline updates while locked in out-of-view phase
+
+            elapsedTime += 0.015;
+            const dt = 0.015;
+
+            // 1. Hazard gate runs first so it can zero targetVelocity before this frame's lerp
+            checkObstacleProximity();
+
+            // 2. Smoothly interpolate (LERP) variables toward Groq intelligence targets
+            currentHipAngle = THREE.MathUtils.lerp(currentHipAngle, targetHipAngle, 0.05);
+            currentKneeAngle = THREE.MathUtils.lerp(currentKneeAngle, targetKneeAngle, 0.05);
+            currentCOMYOffset = THREE.MathUtils.lerp(currentCOMYOffset, targetCOMYOffset, 0.05);
+            movementVelocity = THREE.MathUtils.lerp(movementVelocity, targetVelocity, 0.06);
+            globalStepFrequency = THREE.MathUtils.lerp(globalStepFrequency, targetStepFrequency, 0.06);
+            currentHeading = THREE.MathUtils.lerp(currentHeading, targetHeading, 0.06);
+
+            if (stumbleTimer > 0) {
+                stumbleTimer = Math.max(0, stumbleTimer - dt);
+            }
+
+            // 3. Resolve jump/climb transients (forced motion so the clear is visibly obvious)
+            let jumpArc = 0, climbArc = 0;
+            let forcedSpeed = null;
+            if (isJumping) {
+                const t = (elapsedTime - jumpStartTime) / JUMP_DURATION;
+                if (t >= 1) { isJumping = false; }
+                else { jumpArc = Math.sin(Math.min(1, Math.max(0, t)) * Math.PI) * JUMP_HEIGHT; forcedSpeed = JUMP_FORWARD_SPEED; }
+            }
+            if (isClimbing) {
+                const t = (elapsedTime - climbStartTime) / CLIMB_DURATION;
+                if (t >= 1) { isClimbing = false; }
+                else { climbArc = Math.sin(Math.min(1, Math.max(0, t)) * Math.PI) * CLIMB_HEIGHT; forcedSpeed = CLIMB_FORWARD_SPEED; }
+            }
+
+            // 4. Compute locomotion state translation vectors (2D, heading-based)
+            const effectiveSpeed = forcedSpeed !== null ? forcedSpeed : movementVelocity;
+            if ((movementState !== 'idle' || forcedSpeed !== null) && effectiveSpeed > 0) {
+                const Fx = Math.sin(currentHeading), Fz = -Math.cos(currentHeading);
+                robotPos.x += Fx * effectiveSpeed * dt * SPEED_SCALE;
+                robotPos.z += Fz * effectiveSpeed * dt * SPEED_SCALE;
+            }
+            if (sidestepTimer > 0) {
+                const Rx = Math.cos(currentHeading), Rz = Math.sin(currentHeading);
+                robotPos.x += Rx * sidestepSign * SIDESTEP_SPEED * dt;
+                robotPos.z += Rz * sidestepSign * SIDESTEP_SPEED * dt;
+                sidestepTimer = Math.max(0, sidestepTimer - dt);
+            }
+            robotPos.x = THREE.MathUtils.clamp(robotPos.x, -27, 27);
+            robotPos.z = THREE.MathUtils.clamp(robotPos.z, -27, 27);
+
+            // 5. Ground-snap the actor and drive gait/lean/climb animation
+            if (humanoidGroup) {
+                const groundAltitude = calculateGroundMathHeight(robotPos.x, robotPos.z, currentTerrain);
+
+                humanoidGroup.position.set(robotPos.x, groundAltitude + currentCOMYOffset + jumpArc + climbArc, robotPos.z);
+                humanoidGroup.rotation.y = currentHeading;
+
+                // Stumble wobble on a failed hazard response, or a lean into an active sidestep
+                let leanZ = 0;
+                if (stumbleTimer > 0) {
+                    leanZ = Math.sin(stumbleTimer * 45) * 0.18 * stumbleTimer;
+                } else if (sidestepTimer > 0) {
+                    leanZ = -sidestepSign * 0.15;
+                }
+                humanoidGroup.rotation.z = THREE.MathUtils.lerp(humanoidGroup.rotation.z, leanZ, 0.15);
+
+                // Forward lean while climbing for a "scaling the obstacle" read
+                if (torsoGroup) {
+                    torsoGroup.rotation.x = THREE.MathUtils.lerp(torsoGroup.rotation.x, isClimbing ? 0.3 : 0, 0.12);
+                }
+
+                updateGait(elapsedTime);
+            }
+
+            updateObstacleVisuals();
+
+            // 6. Refresh layout panel counters continuously
+            document.getElementById('telemetry-freq').textContent = `${globalStepFrequency.toFixed(2)} Hz`;
+
+            const zmpHUD = document.getElementById('telemetry-zmp');
+            if (zmpHUD) {
+                let stabilityFluctuation = movementState === 'idle' ? 0.3 : movementState === 'walk' ? 0.8 : 2.5;
+                let stumblePenalty = stumbleTimer > 0 ? stumbleTimer * 40 : 0;
+                const baseStability = 98.0 - (movementVelocity * 2) - stumblePenalty + Math.sin(elapsedTime * 5.0) * stabilityFluctuation;
+                zmpHUD.textContent = `${Math.min(100, Math.max(10, baseStability)).toFixed(1)}%`;
+            }
+
+            // 7. Automated cinematic tracking camera (tracks the moving robot smoothly)
+            if (camera && humanoidGroup) {
+                let targetCamX = humanoidGroup.position.x + Math.sin(elapsedTime * 0.08) * 8.5;
+                let targetCamZ = humanoidGroup.position.z + Math.cos(elapsedTime * 0.08) * 8.5;
+
+                camera.position.x = THREE.MathUtils.lerp(camera.position.x, targetCamX, 0.05);
+                camera.position.z = THREE.MathUtils.lerp(camera.position.z, targetCamZ, 0.05);
+                camera.position.y = THREE.MathUtils.lerp(camera.position.y, humanoidGroup.position.y + 3.2, 0.05);
+
+                camera.lookAt(humanoidGroup.position.x, humanoidGroup.position.y + 0.4, humanoidGroup.position.z);
+            }
+
+            renderer.render(scene, camera);
+        }
+    </script>
+</body>
+</html>
