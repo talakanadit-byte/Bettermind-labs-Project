@@ -261,6 +261,10 @@
                     <i class="fa-solid fa-user-gear mr-1"></i> <span id="user-display-name">OPERATOR</span>
                 </div>
 
+                <button onclick="toggleEducationalPhase()" class="px-3 py-1.5 rounded border border-purple-500/50 bg-purple-900/20 hover:bg-purple-900/40 text-purple-400 text-[11px] font-bold tracking-wider uppercase transition-colors flex items-center gap-1.5">
+                    <i class="fa-solid fa-graduation-cap"></i> Robotics Hub
+                </button>
+
                 <button onclick="logoutSession()" class="px-2.5 py-1 rounded border border-zinc-800 bg-zinc-900 hover:bg-zinc-800 text-zinc-400 text-[11px] font-bold tracking-wider uppercase transition-colors flex items-center gap-1">
                     <i class="fa-solid fa-power-off text-[10px] text-rose-500"></i> Disconnect
                 </button>
@@ -437,6 +441,119 @@
             <div>LOG_BUFFER: CLEAR</div>
             <div class="text-emerald-500">CONNECTED TO TERRAWALK KINEMATIC BACKEND</div>
         </footer>
+    </div>
+
+
+    <div id="educational-phase" class="hidden w-full min-h-screen flex flex-col bg-[#06060a] text-zinc-200">
+        <nav class="border-b border-zinc-800 bg-zinc-950 px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <i class="fa-solid fa-book-open text-purple-400"></i>
+                <span class="text-sm font-bold tracking-wider text-white uppercase">Robotics <span class="text-purple-400">Knowledge Hub</span></span>
+            </div>
+            <button onclick="toggleEducationalPhase()" class="px-3 py-1.5 rounded border border-cyan-500/50 bg-cyan-900/20 hover:bg-cyan-900/40 text-cyan-400 text-[11px] font-bold tracking-wider uppercase transition-colors flex items-center gap-1.5">
+                <i class="fa-solid fa-arrow-left"></i> Back to Simulation
+            </button>
+        </nav>
+
+        <main class="flex-1 w-full max-w-6xl mx-auto p-6 md:p-12 overflow-y-auto">
+            <header class="mb-12 text-center">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400 mb-4">Anatomy of a Robot</h2>
+                <p class="text-zinc-400 font-sans max-w-2xl mx-auto text-sm leading-relaxed">
+                    Understanding the core components of robotic systems is crucial for mastering simulation control. Below is an educational breakdown of how modern robots perceive, think, and act in volatile environments.
+                </p>
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="p-6 rounded-lg bg-zinc-900/40 border border-zinc-800/80 hover:border-purple-500/50 transition-all duration-300">
+                    <div class="flex items-center gap-3 text-purple-400 mb-3">
+                        <i class="fa-solid fa-eye text-xl"></i>
+                        <h3 class="font-bold uppercase tracking-wider text-sm">Sensors (Perception)</h3>
+                    </div>
+                    <p class="text-sm text-zinc-400 font-sans leading-relaxed">
+                        Sensors are the "eyes and ears" of a robot. They collect data about the environment (like distance to obstacles, temperature, or terrain friction). Common sensors include LiDAR, ultrasonic sensors, cameras, and IMUs (Inertial Measurement Units) which help the robot maintain balance.
+                    </p>
+                </div>
+
+                <div class="p-6 rounded-lg bg-zinc-900/40 border border-zinc-800/80 hover:border-cyan-500/50 transition-all duration-300">
+                    <div class="flex items-center gap-3 text-cyan-400 mb-3">
+                        <i class="fa-solid fa-microchip text-xl"></i>
+                        <h3 class="font-bold uppercase tracking-wider text-sm">Control System (Brain)</h3>
+                    </div>
+                    <p class="text-sm text-zinc-400 font-sans leading-relaxed">
+                        The control system processes sensor data and decides what to do next. In TerraWalk AI, this is powered by a high-level Large Language Model (Groq) and localized kinematic math. It calculates step frequency, joint angles, and center-of-mass shifts to navigate safely.
+                    </p>
+                </div>
+
+                <div class="p-6 rounded-lg bg-zinc-900/40 border border-zinc-800/80 hover:border-emerald-500/50 transition-all duration-300">
+                    <div class="flex items-center gap-3 text-emerald-400 mb-3">
+                        <i class="fa-solid fa-cogs text-xl"></i>
+                        <h3 class="font-bold uppercase tracking-wider text-sm">Actuators (Muscles)</h3>
+                    </div>
+                    <p class="text-sm text-zinc-400 font-sans leading-relaxed">
+                        Actuators convert energy into physical motion. They act as the "muscles" and "joints" of the robot. Electric motors, hydraulic cylinders, and pneumatic valves are all examples of actuators that drive the hips, knees, and ankles of a bipedal robot.
+                    </p>
+                </div>
+
+                <div class="p-6 rounded-lg bg-zinc-900/40 border border-zinc-800/80 hover:border-amber-500/50 transition-all duration-300">
+                    <div class="flex items-center gap-3 text-amber-400 mb-3">
+                        <i class="fa-solid fa-battery-full text-xl"></i>
+                        <h3 class="font-bold uppercase tracking-wider text-sm">Power Supply (Energy)</h3>
+                    </div>
+                    <p class="text-sm text-zinc-400 font-sans leading-relaxed">
+                        Every system needs energy to operate. Robots typically rely on heavy-duty lithium-ion batteries, tethered power lines, or even internal combustion engines for hydraulics. Efficient gait algorithms help preserve power during long traversals.
+                    </p>
+                </div>
+
+                <div class="p-6 rounded-lg bg-zinc-900/40 border border-zinc-800/80 hover:border-rose-500/50 transition-all duration-300 md:col-span-2">
+                    <div class="flex items-center gap-3 text-rose-400 mb-3">
+                        <i class="fa-solid fa-hand-sparkles text-xl"></i>
+                        <h3 class="font-bold uppercase tracking-wider text-sm">End Effectors (Hands/Feet)</h3>
+                    </div>
+                    <p class="text-sm text-zinc-400 font-sans leading-relaxed">
+                        End effectors are the tools or contact points at the end of robotic limbs. For factory arms, this might be a welder or a gripper. For the TerraWalk humanoid, the end effectors are its high-friction foot pads designed to maintain the Zero Moment Point (ZMP) stability on uneven terrain.
+                    </p>
+                </div>
+            </div>
+        </main>
+
+        <div id="robobuddy-widget" class="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+            
+            <div id="robobuddy-chat-window" class="hidden w-80 sm:w-96 h-96 bg-zinc-950 border border-zinc-700 rounded-lg shadow-2xl mb-4 flex flex-col overflow-hidden">
+                <div class="bg-gradient-to-r from-purple-700 to-purple-900 p-3 flex justify-between items-center text-white border-b border-purple-500">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-robot text-lg"></i>
+                        <span class="font-bold text-sm tracking-wide">Robobuddy AI</span>
+                    </div>
+                    <button onclick="toggleRobobuddy()" class="text-purple-200 hover:text-white transition-colors">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                
+                <div id="robobuddy-messages" class="flex-1 p-4 overflow-y-auto space-y-4 bg-zinc-900/50 text-sm font-sans">
+                    <div class="flex gap-2">
+                        <div class="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-robot text-white text-xs"></i>
+                        </div>
+                        <div class="bg-zinc-800 text-zinc-200 rounded-lg rounded-tl-none p-3 shadow text-sm">
+                            Hello! I'm Robobuddy. Ask me anything about robot parts, simulation settings, or how to command the matrix!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-3 border-t border-zinc-800 bg-zinc-950">
+                    <form id="robobuddy-form" onsubmit="handleRobobuddySubmit(event)" class="flex gap-2">
+                        <input type="text" id="robobuddy-input" autocomplete="off" placeholder="Ask a question..." class="flex-1 bg-zinc-900 border border-zinc-700 rounded-full px-4 py-2 text-xs focus:outline-none focus:border-purple-500 text-zinc-200 font-sans">
+                        <button type="submit" class="w-9 h-9 rounded-full bg-purple-600 hover:bg-purple-500 text-white flex items-center justify-center transition-colors">
+                            <i class="fa-solid fa-paper-plane text-xs"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <button onclick="toggleRobobuddy()" class="w-14 h-14 bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-500 hover:to-cyan-500 text-white rounded-full shadow-[0_0_15px_rgba(168,85,247,0.5)] flex items-center justify-center transition-transform hover:scale-110">
+                <i class="fa-solid fa-robot text-2xl"></i>
+            </button>
+        </div>
     </div>
 
 
@@ -627,7 +744,116 @@
             }
             isLoggedIn = false;
             document.getElementById('dashboard-phase').classList.add('hidden');
+            document.getElementById('educational-phase').classList.add('hidden');
             document.getElementById('landing-phase').classList.remove('hidden');
+        }
+
+        // ---- Phase Toggling (Dashboard <-> Education) ----
+        let isSimulating = true;
+        function toggleEducationalPhase() {
+            const dashboard = document.getElementById('dashboard-phase');
+            const educational = document.getElementById('educational-phase');
+
+            if (dashboard.classList.contains('hidden')) {
+                // Switching back to dashboard
+                dashboard.classList.remove('hidden');
+                educational.classList.add('hidden');
+                isSimulating = true;
+                setTimeout(() => window.dispatchEvent(new Event('resize')), 100);
+            } else {
+                // Switching to educational page
+                dashboard.classList.add('hidden');
+                educational.classList.remove('hidden');
+                isSimulating = false; // Pause render loop updates if desired
+            }
+        }
+
+        // ---- Robobuddy AI Chatbot Logic ----
+        let robobuddyHistory = [];
+        
+        function toggleRobobuddy() {
+            const chatWindow = document.getElementById('robobuddy-chat-window');
+            if (chatWindow.classList.contains('hidden')) {
+                chatWindow.classList.remove('hidden');
+                document.getElementById('robobuddy-input').focus();
+            } else {
+                chatWindow.classList.add('hidden');
+            }
+        }
+
+        async function handleRobobuddySubmit(event) {
+            event.preventDefault();
+            const inputField = document.getElementById('robobuddy-input');
+            const message = inputField.value.trim();
+            if (!message) return;
+
+            inputField.value = '';
+            appendRobobuddyMessage(message, 'user');
+
+            // Show typing indicator
+            const typingId = 'typing-' + Date.now();
+            appendRobobuddyMessage('...', 'bot', typingId);
+
+            try {
+                const response = await fetch('/api/robobuddy', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: message, history: robobuddyHistory })
+                });
+
+                const data = await response.json();
+                
+                // Remove typing indicator
+                const typingEl = document.getElementById(typingId);
+                if (typingEl) typingEl.remove();
+
+                if (data.error) {
+                    appendRobobuddyMessage("Error connecting to neural net. " + data.error, 'bot');
+                } else {
+                    appendRobobuddyMessage(data.reply, 'bot');
+                    // Store in history
+                    robobuddyHistory.push({"role": "user", "content": message});
+                    robobuddyHistory.push({"role": "assistant", "content": data.reply});
+                    
+                    // Keep history manageable
+                    if(robobuddyHistory.length > 10) robobuddyHistory = robobuddyHistory.slice(-10);
+                }
+
+            } catch (err) {
+                const typingEl = document.getElementById(typingId);
+                if (typingEl) typingEl.remove();
+                appendRobobuddyMessage("Connection error with TerraWalk backend.", 'bot');
+            }
+        }
+
+        function appendRobobuddyMessage(text, sender, id = null) {
+            const container = document.getElementById('robobuddy-messages');
+            const wrapper = document.createElement('div');
+            wrapper.className = "flex gap-2 " + (sender === 'user' ? "justify-end" : "");
+            if (id) wrapper.id = id;
+
+            if (sender === 'bot') {
+                wrapper.innerHTML = `
+                    <div class="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center flex-shrink-0">
+                        <i class="fa-solid fa-robot text-white text-xs"></i>
+                    </div>
+                    <div class="bg-zinc-800 text-zinc-200 rounded-lg rounded-tl-none p-3 shadow text-sm break-words max-w-[80%] whitespace-pre-line">
+                        ${text}
+                    </div>
+                `;
+            } else {
+                wrapper.innerHTML = `
+                    <div class="bg-cyan-700 text-white rounded-lg rounded-tr-none p-3 shadow text-sm break-words max-w-[80%] whitespace-pre-line">
+                        ${text}
+                    </div>
+                    <div class="w-8 h-8 rounded-full bg-cyan-900 flex items-center justify-center flex-shrink-0">
+                        <i class="fa-solid fa-user text-cyan-200 text-xs"></i>
+                    </div>
+                `;
+            }
+
+            container.appendChild(wrapper);
+            container.scrollTop = container.scrollHeight;
         }
 
         // ---- Auto Session Listener on Load ----
@@ -644,6 +870,7 @@
                     } else if (event === 'SIGNED_OUT') {
                         isLoggedIn = false;
                         document.getElementById('dashboard-phase').classList.add('hidden');
+                        document.getElementById('educational-phase').classList.add('hidden');
                         document.getElementById('landing-phase').classList.remove('hidden');
                     }
                 });
@@ -682,33 +909,28 @@
         let leftHip, leftKnee, rightHip, rightKnee;
         let elapsedTime = 0;
 
-        // Full 2D world position + heading (yaw). Heading 0 = facing -Z. This is what makes
-        // rotate/turn commands actually change the direction the robot walks in.
+        // Full 2D world position + heading (yaw). Heading 0 = facing -Z.
         let robotPos = { x: 0, z: 0 };
         let currentHeading = 0, targetHeading = 0;
         const SPEED_SCALE = 1.2;
 
-        // Mechanical physics pose targets (for clean LERP animations)
+        // Mechanical physics pose targets
         let currentHipAngle = 0, targetHipAngle = 0;
         let currentKneeAngle = 0, targetKneeAngle = 0;
         let currentCOMYOffset = 0.0, targetCOMYOffset = 0.0;
 
-        // Jump transient: scripted, forced forward motion so the robot visibly clears the gap
+        // Transients
         let isJumping = false, jumpStartTime = -999;
         const JUMP_DURATION = 0.6, JUMP_HEIGHT = 0.85, JUMP_FORWARD_SPEED = 2.4;
 
-        // Climb transient: slower, higher, exaggerated high-step motion over the obstacle
         let isClimbing = false, climbStartTime = -999;
         const CLIMB_DURATION = 1.3, CLIMB_HEIGHT = 0.5, CLIMB_FORWARD_SPEED = 1.5;
 
-        // Sidestep transient: timed lateral strafe relative to current heading
         let sidestepTimer = 0, sidestepSign = 0;
         const SIDESTEP_SPEED = 2.0;
 
-        // Procedural terrain noise seed (varies shape between regenerations of the same biome)
         let noiseSeedX = 0, noiseSeedZ = 0;
 
-        // Obstacle detection tuning
         const DETECTION_RANGE = 3.2;
         const LANE_WIDTH = 1.6;
         const CLEAR_PASS_RANGE = -1.5;
@@ -760,21 +982,16 @@
             primaryGlowLight.position.set(0, 3, 0);
             scene.add(primaryGlowLight);
 
-            // Procedurally deformed terrain, spawn marker, actor, and hazard field
             generateProceduralTerrain(currentTerrain);
             buildStartMarker();
             buildHumanoidMatrix();
             spawnObstacleField(currentTerrain);
 
-            // Track window sizing changes dynamically
             window.addEventListener('resize', onViewportResizeMatrixAdjust);
 
-            // Launch Execution Render loop
             renderer.setAnimationLoop(animateSimulationCycle);
         }
 
-        // Pure mathematical formula calculation matching vertex shader deforms. noiseSeedX/Z
-        // offset the trig phase so regenerating the same biome still produces a fresh shape.
         function calculateGroundMathHeight(globalX, globalZ, biome) {
             let localX = globalX + noiseSeedX;
             let localY = -globalZ + noiseSeedZ;
@@ -791,7 +1008,6 @@
             return 0.0;
         }
 
-        // Generates and deforms the physical ground platform geometry per-vertex to match the biome
         function generateProceduralTerrain(biome) {
             if (environmentalFloor) scene.remove(environmentalFloor);
             if (gridHelper) scene.remove(gridHelper);
@@ -823,7 +1039,6 @@
             scene.add(gridHelper);
         }
 
-        // Marks the robot's spawn location so it is always clear where traversal begins
         function buildStartMarker() {
             if (startMarker) scene.remove(startMarker);
             const ringGeo = new THREE.RingGeometry(0.7, 0.9, 32);
@@ -834,8 +1049,6 @@
             scene.add(startMarker);
         }
 
-        // Constructs an articulated cybernetic humanoid: head w/ visor + headlamp, jointed torso/arms,
-        // and jointed legs (hip -> knee -> foot) so gait, jumps, and climbs read as real motion.
         function buildHumanoidMatrix() {
             humanoidGroup = new THREE.Group();
 
@@ -844,13 +1057,11 @@
             const jointMat = new THREE.MeshStandardMaterial({ color: 0x2dd4bf, metalness: 0.3, roughness: 0.4, emissive: 0x0f766e, emissiveIntensity: 0.7 });
             const visorMat = new THREE.MeshStandardMaterial({ color: 0x22d3ee, emissive: 0x22d3ee, emissiveIntensity: 1.4, metalness: 0.1, roughness: 0.1 });
 
-            // ---- Pelvis (hip girdle) - root articulation point ----
             pelvisGroup = new THREE.Group();
             pelvisGroup.position.y = 1.02;
             humanoidGroup.add(pelvisGroup);
             pelvisGroup.add(new THREE.Mesh(new THREE.BoxGeometry(0.46, 0.2, 0.28), bodyMat));
 
-            // ---- Torso ----
             torsoGroup = new THREE.Group();
             torsoGroup.position.y = 0.12;
             pelvisGroup.add(torsoGroup);
@@ -863,7 +1074,6 @@
             chestAccent.position.set(0, 0.35, 0.16);
             torsoGroup.add(chestAccent);
 
-            // ---- Head + visor + headlamp beam ----
             headGroup = new THREE.Group();
             headGroup.position.y = 0.58;
             torsoGroup.add(headGroup);
@@ -881,7 +1091,6 @@
             headGroup.add(headLightTarget);
             headSpotlight.target = headLightTarget;
 
-            // Cheap volumetric-look beam cone (additive, unlit) to visually sell the headlamp in the fog
             const beamGeo = new THREE.CylinderGeometry(1.5, 0.04, 9, 20, 1, true);
             beamGeo.translate(0, 4.5, 0);
             const beamMat = new THREE.MeshBasicMaterial({ color: 0xbfe9ff, transparent: true, opacity: 0.06, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide });
@@ -890,7 +1099,6 @@
             beamMesh.position.set(0, -0.02, 0.1);
             headGroup.add(beamMesh);
 
-            // ---- Arms (shoulder -> elbow) ----
             function buildArm(sideSign) {
                 const shoulder = new THREE.Group();
                 shoulder.position.set(sideSign * 0.32, 0.42, 0);
@@ -915,7 +1123,6 @@
             leftShoulder = buildArm(-1);
             rightShoulder = buildArm(1);
 
-            // ---- Legs (hip -> knee -> foot) ----
             function buildLeg(sideSign) {
                 const hip = new THREE.Group();
                 hip.position.set(sideSign * 0.17, 0, 0);
@@ -949,7 +1156,6 @@
             scene.add(humanoidGroup);
         }
 
-        // ---- Obstacle / Hazard Field System ----
         function createObstacleMesh(type) {
             let group = new THREE.Group();
             if (type === 'boulder') {
@@ -994,8 +1200,6 @@
             for (let i = 0; i < count; i++) {
                 const type = weightedTypes[Math.floor(Math.random() * weightedTypes.length)];
                 const z = -6 - (i * spacing) - Math.random() * 2;
-                // Kept tight to the walking corridor (matches LANE_WIDTH) so generated hazards are
-                // reliably encountered rather than silently sitting off to the side.
                 const x = (Math.random() - 0.5) * 2.4;
                 const mesh = createObstacleMesh(type);
                 const groundY = calculateGroundMathHeight(x, z, biome);
@@ -1008,9 +1212,6 @@
             pushLogSystem(`Hazard matrix populated with ${count} unpredictable operational anomalies.`, "warning");
         }
 
-        // Converts an obstacle's world position into the robot's local forward/lateral frame,
-        // based on the robot's *current heading* - so turning the robot genuinely changes whether
-        // something ahead still counts as "blocking".
         function relativeLocal(o) {
             const dx = o.x - robotPos.x;
             const dz = o.z - robotPos.z;
@@ -1046,7 +1247,6 @@
             });
         }
 
-        // Shrinks/dissolves obstacles away once cleared so the operator gets an obvious visual payoff
         function updateObstacleVisuals() {
             obstacles.forEach(o => {
                 if (o.cleared && o.clearAnimStart !== undefined && o.mesh.visible) {
@@ -1064,9 +1264,6 @@
             stumbleTimer = 0.5;
         }
 
-        // Scans the obstacle field each frame to detect hazards ahead of the robot (accounting for both
-        // forward distance AND how far off to the side they are) and halts for instructions. Also
-        // continuously re-checks the active hazard so turning away from it genuinely releases the hold.
         function checkObstacleProximity() {
             if (activeObstacle && !activeObstacle.cleared) {
                 const { forwardDist, lateralDist } = relativeLocal(activeObstacle);
@@ -1109,11 +1306,9 @@
             }
         }
 
-        // ---- UI Action Responders & Handlers ----
         function switchTerrain(terrainKey) {
             if (!TERRAINS[terrainKey]) return;
 
-            // Handle active styling class changes
             Object.keys(TERRAINS).forEach(k => {
                 const btn = document.getElementById(`btn-terrain-${k}`);
                 if (btn) {
@@ -1131,7 +1326,6 @@
             angleSlider.value = preset.angle;
             document.getElementById('angle-val').textContent = `${preset.angle.toFixed(1)}°`;
 
-            // Update top bar layout dashboard labels
             document.getElementById('telemetry-terrain').textContent = terrainKey;
             document.getElementById('telemetry-friction').textContent = preset.friction.toFixed(2);
             document.getElementById('telemetry-angle').textContent = `${preset.angle.toFixed(1)}°`;
@@ -1140,8 +1334,6 @@
             pushLogSystem(`Telemetry plane shifted to Node Cluster biome profile: [${preset.title}]`, "info");
         }
 
-        // Regenerates terrain shape + obstacle scatter with a fresh noise seed, and returns the
-        // robot to the START marker so the newly generated hazard field is always reachable.
         function regenerateWorld(biome) {
             currentTerrain = biome;
             noiseSeedX = Math.random() * 1000;
@@ -1236,8 +1428,6 @@
             logDeck.scrollTop = logDeck.scrollHeight;
         }
 
-        // Packages dashboard tracking criteria and triggers the serverless Groq kinematic brain.
-        // Shared by the text form submit handler and the voice recognition result handler.
         async function executeCommand() {
             const commandInput = document.getElementById('command-input');
             const shimmerHud = document.getElementById('shimmer-hud');
@@ -1295,7 +1485,6 @@
                     targetStepFrequency = data.step_frequency;
                 }
 
-                // Rotation / detour: applies independently of any hazard, so "turn clockwise" always works
                 let rotationApplied = false;
                 if (data.rotation && data.rotation.turn && data.rotation.turn !== 'none') {
                     const deg = data.rotation.angle_degrees || 90;
@@ -1305,7 +1494,6 @@
                     pushLogSystem(`Rotating ${data.rotation.turn} ${deg.toFixed(0)}°.`, "info");
                 }
 
-                // ---- Hazard resolution logic ----
                 if (activeObstacle && !activeObstacle.cleared) {
                     const action = data.obstacle_action || 'none';
                     const validActions = OBSTACLE_CLEAR_ACTIONS[activeObstacle.type] || [];
@@ -1313,10 +1501,8 @@
                     if (validActions.includes(action)) {
                         markObstacleCleared(activeObstacle);
                         document.getElementById('hazard-hud').classList.add('hidden');
-                        // Guarantee forward progress resumes after a successful clear even if Groq
-                        // returned a near-zero velocity for the discrete jump/climb/sidestep action itself.
                         targetVelocity = Math.max(data.velocity !== undefined ? data.velocity : 1.5, 1.2);
-                        movementVelocity = targetVelocity; // snap so the transient starts immediately
+                        movementVelocity = targetVelocity; 
 
                         if (action === 'jump') {
                             isJumping = true;
@@ -1367,13 +1553,11 @@
             }
         }
 
-        // ---- Processing Input Form Event Interception ----
         document.getElementById('control-form').addEventListener('submit', function(e) {
             e.preventDefault();
             executeCommand();
         });
 
-        // ---- Voice command capture (Web Speech + Web Audio waveform) ----
         function setupVoiceProcessingEngine() {
             const voiceBtn = document.getElementById('voice-btn');
             const commandInput = document.getElementById('command-input');
@@ -1522,8 +1706,6 @@
             ctx.stroke();
         }
 
-        // Drives hip/knee/arm rotations every frame based on current locomotion state, producing a
-        // distinct, clearly readable animation for walking, running, climbing, and jumping.
         function updateGait(t) {
             const baseHip = currentHipAngle;
             const baseKnee = -currentKneeAngle;
@@ -1554,7 +1736,6 @@
             leftKnee.rotation.x = baseKnee - Math.max(0, Math.sin(leftPhase)) * kneeAmplitude;
             rightKnee.rotation.x = baseKnee - Math.max(0, Math.sin(rightPhase)) * kneeAmplitude;
 
-            // Arms counter-swing opposite their same-side leg for a natural gait
             leftShoulder.rotation.x = -Math.sin(leftPhase) * armAmplitude;
             rightShoulder.rotation.x = -Math.sin(rightPhase) * armAmplitude;
         }
@@ -1566,17 +1747,14 @@
             renderer.setSize(container.clientWidth, container.clientHeight);
         }
 
-        // ---- Continuous Frame Calculation Tick Render Loop ----
         function animateSimulationCycle() {
-            if (!isLoggedIn) return; // Freeze pipeline updates while locked in out-of-view phase
+            if (!isLoggedIn || !isSimulating) return;
 
             elapsedTime += 0.015;
             const dt = 0.015;
 
-            // 1. Hazard gate runs first so it can zero targetVelocity before this frame's lerp
             checkObstacleProximity();
 
-            // 2. Smoothly interpolate (LERP) variables toward Groq intelligence targets
             currentHipAngle = THREE.MathUtils.lerp(currentHipAngle, targetHipAngle, 0.05);
             currentKneeAngle = THREE.MathUtils.lerp(currentKneeAngle, targetKneeAngle, 0.05);
             currentCOMYOffset = THREE.MathUtils.lerp(currentCOMYOffset, targetCOMYOffset, 0.05);
@@ -1588,7 +1766,6 @@
                 stumbleTimer = Math.max(0, stumbleTimer - dt);
             }
 
-            // 3. Resolve jump/climb transients (forced motion so the clear is visibly obvious)
             let jumpArc = 0, climbArc = 0;
             let forcedSpeed = null;
             if (isJumping) {
@@ -1602,7 +1779,6 @@
                 else { climbArc = Math.sin(Math.min(1, Math.max(0, t)) * Math.PI) * CLIMB_HEIGHT; forcedSpeed = CLIMB_FORWARD_SPEED; }
             }
 
-            // 4. Compute locomotion state translation vectors (2D, heading-based)
             const effectiveSpeed = forcedSpeed !== null ? forcedSpeed : movementVelocity;
             if ((movementState !== 'idle' || forcedSpeed !== null) && effectiveSpeed > 0) {
                 const Fx = Math.sin(currentHeading), Fz = -Math.cos(currentHeading);
@@ -1618,14 +1794,12 @@
             robotPos.x = THREE.MathUtils.clamp(robotPos.x, -27, 27);
             robotPos.z = THREE.MathUtils.clamp(robotPos.z, -27, 27);
 
-            // 5. Ground-snap the actor and drive gait/lean/climb animation
             if (humanoidGroup) {
                 const groundAltitude = calculateGroundMathHeight(robotPos.x, robotPos.z, currentTerrain);
 
                 humanoidGroup.position.set(robotPos.x, groundAltitude + currentCOMYOffset + jumpArc + climbArc, robotPos.z);
                 humanoidGroup.rotation.y = currentHeading;
 
-                // Stumble wobble on a failed hazard response, or a lean into an active sidestep
                 let leanZ = 0;
                 if (stumbleTimer > 0) {
                     leanZ = Math.sin(stumbleTimer * 45) * 0.18 * stumbleTimer;
@@ -1634,7 +1808,6 @@
                 }
                 humanoidGroup.rotation.z = THREE.MathUtils.lerp(humanoidGroup.rotation.z, leanZ, 0.15);
 
-                // Forward lean while climbing for a "scaling the obstacle" read
                 if (torsoGroup) {
                     torsoGroup.rotation.x = THREE.MathUtils.lerp(torsoGroup.rotation.x, isClimbing ? 0.3 : 0, 0.12);
                 }
@@ -1644,7 +1817,6 @@
 
             updateObstacleVisuals();
 
-            // 6. Refresh layout panel counters continuously
             document.getElementById('telemetry-freq').textContent = `${globalStepFrequency.toFixed(2)} Hz`;
 
             const zmpHUD = document.getElementById('telemetry-zmp');
@@ -1655,7 +1827,6 @@
                 zmpHUD.textContent = `${Math.min(100, Math.max(10, baseStability)).toFixed(1)}%`;
             }
 
-            // 7. Automated cinematic tracking camera (tracks the moving robot smoothly)
             if (camera && humanoidGroup) {
                 let targetCamX = humanoidGroup.position.x + Math.sin(elapsedTime * 0.08) * 8.5;
                 let targetCamZ = humanoidGroup.position.z + Math.cos(elapsedTime * 0.08) * 8.5;

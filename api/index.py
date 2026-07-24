@@ -47,6 +47,48 @@ def health_check():
         "supabase_auth_configured": has_supabase
     })
 
+@app.route('/api/robobuddy', methods=['POST'])
+def robobuddy():
+    """Handles the educational AI chatbot interactions."""
+    if not groq_client:
+        return jsonify({
+            "error": "Groq client uninitialized. Please confirm your GROQ_API_KEY environment configuration mapping."
+        }), 500
+
+    try:
+        data = request.get_json() or {}
+        user_message = data.get("message", "")
+        chat_history = data.get("history", [])
+
+        system_prompt = (
+            "You are Robobuddy, a friendly, highly educational AI assistant integrated into the TerraWalk AI robotics simulation app. "
+            "Your primary goal is to help users (especially students and hobbyists) understand robotics concepts. "
+            "You must readily answer questions about the parts of a robot, how to adjust simulation settings (like friction, tilt angle, "
+            "and terrain), and how to command the robot to perform specific tasks (like traversing environments or dodging hazards). "
+            "Keep your explanations concise, engaging, and easy to understand."
+        )
+
+        messages = [{"role": "system", "content": system_prompt}]
+        for msg in chat_history:
+            messages.append(msg)
+        messages.append({"role": "user", "content": user_message})
+
+        chat_completion = groq_client.chat.completions.create(
+            messages=messages,
+            model="llama-3.1-8b-instant",
+            temperature=0.4
+        )
+        
+        reply = chat_completion.choices[0].message.content
+        return jsonify({"reply": reply})
+
+    except Exception as e:
+        return jsonify({
+            "error": "Failed to communicate with Robobuddy.",
+            "details": str(e)
+        }), 500
+
+
 @app.route('/api/traverse', methods=['POST'])
 def traverse():
     """Maps traversal prompts and environmental variables to the Groq High-Level Kinematic Brain."""
